@@ -1,2000 +1,645 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Antojitos Luli Gourmet | Mini Donas, Waffles, Frappés y Chamoyadas</title>
-  <meta name="description" content="Antojitos Luli Gourmet en Shushufindi: mini donas, waffles, frappés, chamoyadas, bolos tres leches y frutas con crema. Haz tu pedido para consumir en el local o a domicilio por WhatsApp.">
-
-  <!-- Tipografías -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
-  <!-- Iconos -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <style>
-    :root {
-      --rosa-pastel: #fadadd;
-      --celeste-pastel: #ddefff;
-      --crema: #fff7e6;
-      --lila-pastel: #f3e6ff;
-      --texto-principal: #4a3b4f;
-      --texto-suave: #7b6f85;
-      --blanco: #ffffff;
-      --sombra-suave: 0 12px 30px rgba(240, 170, 200, 0.35);
-      --borde-radio: 18px;
-      --transition-base: all 0.25s ease;
-      --max-width: 1120px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--texto-principal);
-      background: radial-gradient(circle at top left, #ffeef7 0, #fff7e6 35%, #ddefff 75%, #f3e6ff 100%);
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    /* FONDO FLOTANTE */
-    .bg-floating {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-      opacity: 0.55;
-    }
-
-    .floating-icon {
-      position: absolute;
-      font-size: 3.5rem;
-      animation: floatY 10s ease-in-out infinite alternate;
-      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.08));
-    }
-
-    .floating-icon:nth-child(1) { top: 8%; left: 6%; animation-duration: 12s; }
-    .floating-icon:nth-child(2) { top: 18%; right: 10%; animation-duration: 14s; }
-    .floating-icon:nth-child(3) { top: 50%; left: 2%; animation-duration: 11s; }
-    .floating-icon:nth-child(4) { bottom: 10%; right: 5%; animation-duration: 16s; }
-    .floating-icon:nth-child(5) { bottom: 20%; left: 35%; animation-duration: 13s; }
-
-    @keyframes floatY {
-      0% { transform: translateY(0px); }
-      100% { transform: translateY(-22px); }
-    }
-
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-
-    /* HEADER / NAV */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(16px);
-      background: linear-gradient(90deg, rgba(255,247,230,0.95), rgba(250,218,221,0.95));
-      border-bottom: 1px solid rgba(255,255,255,0.8);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.9rem 0;
-      gap: 1.5rem;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      cursor: pointer;
-    }
-
-    .brand-logo {
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, #ffffff, #fadadd);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      box-shadow: 0 8px 20px rgba(252, 168, 210, 0.6);
-    }
-
-    .brand-text-title {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #4a2f45;
-      line-height: 1.1;
-    }
-
-    .brand-text-sub {
-      font-size: 0.78rem;
-      color: var(--texto-suave);
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: var(--texto-principal);
-      padding: 0.35rem 0.6rem;
-      border-radius: 999px;
-      transition: var(--transition-base);
-      position: relative;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: -0.25rem;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, #ff9ec9, #f3a6ff);
-      transition: width 0.25s ease;
-      border-radius: 999px;
-    }
-
-    nav a:hover::after {
-      width: 70%;
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .btn-nav-whatsapp {
-      padding: 0.55rem 1rem;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 600;
-      background: linear-gradient(135deg, #ffb5d9, #f3e6ff);
-      box-shadow: 0 10px 25px rgba(255, 158, 201, 0.6);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: #4a2f45;
-      transition: var(--transition-base);
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .btn-nav-whatsapp:hover {
-      transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 16px 30px rgba(255, 144, 197, 0.7);
-    }
-
-    .cart-button {
-      position: relative;
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.95);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.8);
-      box-shadow: 0 8px 20px rgba(197, 169, 210, 0.6);
-      transition: var(--transition-base);
-      color: #6f4b86;
-    }
-
-    .cart-button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 26px rgba(199, 158, 215, 0.85);
-    }
-
-    .cart-count {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      width: 18px;
-      height: 18px;
-      border-radius: 999px;
-      background: #ff7fb4;
-      color: #fff;
-      font-size: 0.7rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      box-shadow: 0 0 0 2px #fff;
-    }
-
-    .nav-toggle {
-      display: none;
-      border: none;
-      background: transparent;
-      font-size: 1.4rem;
-      cursor: pointer;
-      color: var(--texto-principal);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    @media (max-width: 900px) {
-      .nav-toggle {
-        display: block;
-      }
-
-      .nav-links {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        left: 0;
-        background: rgba(255, 247, 230, 0.97);
-        flex-direction: column;
-        padding: 0.75rem 1.5rem 1rem;
-        max-height: 0;
-        overflow: hidden;
-        border-bottom-left-radius: 18px;
-        border-bottom-right-radius: 18px;
-        box-shadow: 0 15px 30px rgba(215, 167, 190, 0.4);
-        transition: max-height 0.28s ease;
-      }
-
-      .nav-links.open {
-        max-height: 500px;
-      }
-
-      nav ul {
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-      }
-
-      .nav-actions {
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .btn-nav-whatsapp {
-        flex: 1;
-        justify-content: center;
-      }
-    }
-
-    main {
-      padding-bottom: 4rem;
-    }
-
-    section {
-      padding: 3.5rem 0;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 2.25rem;
-      max-width: 640px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .section-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-      color: #4a2f45;
-    }
-
-    .section-subtitle {
-      font-size: 0.95rem;
-      color: var(--texto-suave);
-    }
-
-    /* HERO */
-    #inicio {
-      padding-top: 3.2rem;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 3rem;
-      align-items: center;
-    }
-
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.25rem 0.75rem;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.85);
-      font-size: 0.78rem;
-      color: var(--texto-suave);
-      box-shadow: 0 6px 16px rgba(255, 190, 220, 0.7);
-      margin-bottom: 0.9rem;
-    }
-
-    .hero-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 0.9rem;
-      color: #4a2f45;
-    }
-
-    .hero-title span.highlight {
-      background: linear-gradient(90deg, #ff9ec9, #f3a6ff);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .hero-subtitle {
-      font-size: 0.98rem;
-      color: var(--texto-suave);
-      margin-bottom: 1.1rem;
-    }
-
-    .hero-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.4rem;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.35rem 0.7rem;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.9);
-      font-size: 0.8rem;
-      color: var(--texto-principal);
-      box-shadow: 0 4px 12px rgba(245, 188, 215, 0.6);
-    }
-
-    .badge i {
-      color: #ff8eb7;
-    }
-
-    .hero-cta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 1.4rem;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.8rem 1.4rem;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.98rem;
-      font-weight: 600;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #ff9ec9, #ffb5d9);
-      color: #4a2f45;
-      box-shadow: var(--sombra-suave);
-      text-decoration: none;
-      transition: var(--transition-base);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 18px 35px rgba(255, 130, 195, 0.8);
-    }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.45rem;
-      padding: 0.8rem 1.2rem;
-      border-radius: 999px;
-      border: 1px dashed rgba(255, 158, 201, 0.9);
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 600;
-      font-family: 'Poppins', sans-serif;
-      background: rgba(255,255,255,0.9);
-      color: var(--texto-principal);
-      text-decoration: none;
-      transition: var(--transition-base);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255,255,255,1);
-      transform: translateY(-1px);
-      box-shadow: 0 10px 20px rgba(241, 185, 213, 0.6);
-    }
-
-    .hero-strip {
-      display: inline-flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.55rem 0.8rem;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.92);
-      font-size: 0.8rem;
-      color: var(--texto-suave);
-      box-shadow: 0 10px 24px rgba(223, 182, 211, 0.7);
-    }
-
-    .hero-strip span.label {
-      background: #ffe4f1;
-      color: #a84c7a;
-      padding: 0.15rem 0.6rem;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-
-    .hero-right {
-      position: relative;
-    }
-
-    .hero-card {
-      background: rgba(255,255,255,0.96);
-      border-radius: 28px;
-      padding: 1.6rem 1.4rem;
-      box-shadow: 0 22px 55px rgba(205, 163, 199, 0.8);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-    }
-
-    .hero-card-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 600;
-    }
-
-    .hero-card-tag {
-      font-size: 0.75rem;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      background: #ffeaf5;
-      color: #bf457f;
-      font-weight: 600;
-    }
-
-    .hero-price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 0.3rem;
-      margin: 0.8rem 0;
-    }
-
-    .hero-price-main {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: #e15d9a;
-    }
-
-    .hero-price-note {
-      font-size: 0.8rem;
-      color: var(--texto-suave);
-    }
-
-    .hero-card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      margin-top: 0.4rem;
-      flex-wrap: wrap;
-    }
-
-    .hero-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.35rem 0.7rem;
-      background: rgba(221, 239, 255, 0.9);
-      border-radius: 999px;
-      font-size: 0.75rem;
-      color: #48608a;
-    }
-
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .hero-right {
-        max-width: 400px;
-        margin: 0 auto;
-      }
-      .hero-title {
-        font-size: 2.1rem;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .hero-title {
-        font-size: 1.9rem;
-      }
-      section {
-        padding: 3rem 0;
-      }
-    }
-
-    /* PRODUCTOS */
-    .grid {
-      display: grid;
-      gap: 1.5rem;
-    }
-
-    .grid-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .grid-4 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .grid-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    @media (max-width: 960px) {
-      .grid-4 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-    @media (max-width: 720px) {
-      .grid-3,
-      .grid-4,
-      .grid-2 {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .card {
-      background: rgba(255,255,255,0.96);
-      border-radius: var(--borde-radio);
-      padding: 1.2rem 1.1rem 1.1rem;
-      box-shadow: 0 12px 30px rgba(223, 164, 204, 0.6);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: -40px;
-      right: -40px;
-      width: 80px;
-      height: 80px;
-      background: radial-gradient(circle, rgba(255, 176, 215, 0.35), transparent);
-      opacity: 0.7;
-    }
-
-    .product-img {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      border-radius: 16px;
-      background-size: cover;
-      background-position: center;
-      margin-bottom: 0.6rem;
-    }
-
-    .card-title {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      font-size: 1.02rem;
-    }
-
-    .card-text {
-      font-size: 0.88rem;
-      color: var(--texto-suave);
-    }
-
-    .price-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.4rem;
-      margin-top: 0.3rem;
-    }
-
-    .price-main {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      color: #e15d9a;
-      font-size: 1.05rem;
-    }
-
-    .price-note {
-      font-size: 0.8rem;
-      color: var(--texto-suave);
-    }
-
-    .btn-add {
-      margin-top: 0.4rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      padding: 0.55rem 0.9rem;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.82rem;
-      font-weight: 600;
-      background: linear-gradient(135deg, #ddefff, #f3e6ff);
-      color: #4a3b4f;
-      text-decoration: none;
-      transition: var(--transition-base);
-      align-self: flex-start;
-    }
-
-    .btn-add:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 20px rgba(176, 187, 220, 0.8);
-    }
-
-    .chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-      margin-top: 0.25rem;
-    }
-
-    .chip {
-      font-size: 0.72rem;
-      padding: 0.15rem 0.6rem;
-      border-radius: 999px;
-      background: rgba(243, 230, 255, 0.9);
-      color: #745089;
-    }
-
-    /* PASOS */
-    .steps {
-      display: grid;
-      gap: 1.5rem;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-    @media (max-width: 960px) {
-      .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 720px) {
-      .steps { grid-template-columns: minmax(0, 1fr); }
-    }
-
-    .step {
-      background: rgba(255,255,255,0.96);
-      border-radius: 18px;
-      padding: 1rem 1rem;
-      box-shadow: 0 10px 24px rgba(217, 179, 209, 0.7);
-      position: relative;
-    }
-
-    .step-number {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      background: #ffe4f2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #a23f74;
-      margin-bottom: 0.4rem;
-    }
-
-    .step-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.98rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .step-text {
-      font-size: 0.86rem;
-      color: var(--texto-suave);
-    }
-
-    /* TESTIMONIOS */
-    .testimonial-card {
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-    }
-
-    .testimonial-header {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #ffe0f0, #ddefff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      color: #79436e;
-    }
-
-    .testimonial-name {
-      font-size: 0.95rem;
-      font-weight: 600;
-    }
-
-    .testimonial-city {
-      font-size: 0.77rem;
-      color: var(--texto-suave);
-    }
-
-    .testimonial-stars {
-      color: #ffb86c;
-      font-size: 0.8rem;
-    }
-
-    .testimonial-text {
-      font-size: 0.88rem;
-      color: var(--texto-suave);
-    }
-
-    /* CTA FINAL */
-    .cta-final {
-      background: linear-gradient(135deg, rgba(250,218,221,0.96), rgba(221,239,255,0.96));
-      border-radius: 28px;
-      padding: 2.2rem 1.6rem;
-      box-shadow: 0 22px 55px rgba(200, 150, 195, 0.9);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.9rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-      position: relative;
-    }
-
-    .cta-subtitle {
-      font-size: 0.95rem;
-      color: var(--texto-suave);
-      margin-bottom: 1.4rem;
-      position: relative;
-    }
-
-    /* FOOTER */
-    footer {
-      padding: 2rem 0 1.2rem;
-      font-size: 0.8rem;
-      color: var(--texto-suave);
-    }
-
-    .footer-top {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 1.2rem;
-    }
-
-    .footer-brand {
-      max-width: 260px;
-    }
-
-    .footer-brand-title {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-size: 1.05rem;
-      margin-bottom: 0.3rem;
-      color: #4a2f45;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-    }
-
-    .footer-col-title {
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      color: #4a2f45;
-      font-size: 0.85rem;
-    }
-
-    .footer-col p,
-    .footer-col a {
-      font-size: 0.8rem;
-      color: var(--texto-suave);
-      text-decoration: none;
-    }
-
-    .footer-social {
-      display: flex;
-      gap: 0.6rem;
-      margin-top: 0.4rem;
-    }
-
-    .footer-social a {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      color: #a44c7a;
-      box-shadow: 0 6px 14px rgba(210, 158, 200, 0.7);
-      transition: var(--transition-base);
-    }
-
-    .footer-social a:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 20px rgba(195, 143, 187, 0.8);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.7);
-      padding-top: 0.8rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    @media (max-width: 720px) {
-      .footer-top {
-        flex-direction: column;
-      }
-      .footer-bottom {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    /* BOTÓN WHATSAPP FLOTANTE */
-    .whatsapp-floating {
-      position: fixed;
-      bottom: 1.2rem;
-      right: 1.2rem;
-      width: 58px;
-      height: 58px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, #ffffff, #25d366);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #075e54;
-      font-size: 1.7rem;
-      box-shadow: 0 18px 40px rgba(7, 94, 84, 0.7);
-      cursor: pointer;
-      text-decoration: none;
-      z-index: 60;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .whatsapp-floating:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 24px 50px rgba(7, 94, 84, 0.9);
-    }
-
-    /* CARRITO LATERAL */
-    .cart-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.35);
-      z-index: 70;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.25s ease, visibility 0.25s ease;
-    }
-
-    .cart-overlay.open {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .cart-panel {
-      position: fixed;
-      top: 0;
-      right: -400px;
-      width: 100%;
-      max-width: 380px;
-      height: 100vh;
-      background: linear-gradient(135deg, #fff7fb, #ddefff);
-      box-shadow: -12px 0 30px rgba(80, 60, 90, 0.4);
-      z-index: 80;
-      transition: right 0.28s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .cart-panel.open {
-      right: 0;
-    }
-
-    .cart-header {
-      padding: 1.1rem 1.1rem 0.7rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .cart-title {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      font-size: 1.05rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .cart-close {
-      border: none;
-      background: rgba(255,255,255,0.9);
-      border-radius: 999px;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 6px 14px rgba(160, 120, 170, 0.6);
-      color: #6c4a80;
-    }
-
-    .cart-body {
-      padding: 0.5rem 1.1rem 1rem;
-      flex: 1;
-      overflow-y: auto;
-      font-size: 0.9rem;
-    }
-
-    .cart-empty {
-      text-align: center;
-      margin-top: 1.5rem;
-      color: var(--texto-suave);
-      font-size: 0.9rem;
-    }
-
-    .cart-item {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 0.35rem 0.9rem;
-      padding: 0.6rem 0;
-      border-bottom: 1px dashed rgba(255,255,255,0.7);
-    }
-
-    .cart-item-name {
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    .cart-item-price {
-      font-size: 0.82rem;
-      color: var(--texto-suave);
-    }
-
-    .cart-item-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      justify-content: flex-end;
-    }
-
-    .cart-qty-btn {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      border: none;
-      background: rgba(255,255,255,0.95);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 0.85rem;
-      color: #a34b7b;
-      box-shadow: 0 4px 10px rgba(170, 125, 175, 0.7);
-    }
-
-    .cart-qty {
-      min-width: 18px;
-      text-align: center;
-      font-size: 0.85rem;
-    }
-
-    .cart-subtotal-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 0.8rem;
-      font-size: 0.9rem;
-    }
-
-    .cart-subtotal-label {
-      font-weight: 600;
-    }
-
-    .cart-subtotal-value {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      color: #e15d9a;
-    }
-
-    .cart-options {
-      margin-top: 1rem;
-      padding-top: 0.8rem;
-      border-top: 1px solid rgba(255,255,255,0.8);
-      font-size: 0.85rem;
-    }
-
-    .order-type-group {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 0.7rem;
-      flex-wrap: wrap;
-    }
-
-    .order-type {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      background: rgba(255,255,255,0.9);
-      padding: 0.3rem 0.65rem;
-      border-radius: 999px;
-      cursor: pointer;
-      border: 1px solid transparent;
-      font-size: 0.8rem;
-    }
-
-    .order-type input {
-      accent-color: #ff8eb7;
-    }
-
-    .cart-input {
-      width: 100%;
-      border-radius: 10px;
-      border: none;
-      padding: 0.45rem 0.6rem;
-      font-size: 0.8rem;
-      margin-bottom: 0.5rem;
-      background: rgba(255,255,255,0.95);
-      box-shadow: inset 0 0 0 1px rgba(230,210,240,0.8);
-      font-family: inherit;
-    }
-
-    .cart-input::placeholder {
-      color: #b19abf;
-    }
-
-    .cart-footer {
-      padding: 0.65rem 1.1rem 1rem;
-      border-top: 1px solid rgba(255,255,255,0.8);
-    }
-
-    .btn-send {
-      width: 100%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      padding: 0.7rem 1rem;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 600;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #25d366, #1ebe57);
-      color: #ffffff;
-      box-shadow: 0 16px 32px rgba(7,94,84,0.7);
-      text-decoration: none;
-      transition: var(--transition-base);
-    }
-
-    .btn-send:hover {
-      transform: translateY(-1px) scale(1.01);
-      box-shadow: 0 20px 40px rgba(7,94,84,0.9);
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antojitos Luli Gourmet - Menú y Pedidos</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #ffd1e6 0, #ffe7c2 35%, #d7e4ff 75%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* Donas flotando */
+        .dulce-float {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.7;
+        }
+        .dulce-float span {
+            position: absolute;
+            font-size: 3rem;
+            animation: floatY linear infinite;
+        }
+        .dulce-float span:nth-child(1) { top: 8%; left: 8%; animation-duration: 16s; }
+        .dulce-float span:nth-child(2) { top: 16%; right: 12%; animation-duration: 20s; }
+        .dulce-float span:nth-child(3) { top: 55%; left: 5%; animation-duration: 18s; }
+        .dulce-float span:nth-child(4) { bottom: 15%; right: 10%; animation-duration: 22s; }
+        .dulce-float span:nth-child(5) { bottom: 20%; left: 35%; animation-duration: 19s; }
+
+        @keyframes floatY {
+            0% { transform: translateY(0px); opacity: .3; }
+            50% { opacity: .9; }
+            100% { transform: translateY(-25px); opacity: .3; }
+        }
+
+        .brand-pink    { color: #EC4899; }
+        .brand-lilac   { color: #8B5CF6; }
+        .brand-bg-main { background-color: rgba(255,255,255,0.9); }
+
+        .glossy-text {
+            text-shadow: 0 0 4px rgba(255,255,255,0.8),
+                         0 0 10px rgba(236,72,153,0.6),
+                         0 0 16px rgba(129,140,248,0.6);
+        }
+    </style>
 </head>
-<body>
-  <!-- FONDO PASTEL CON ICONOS FLOTANTES -->
-  <div class="bg-floating" aria-hidden="true">
-    <div class="floating-icon">🍩</div>
-    <div class="floating-icon">🧁</div>
-    <div class="floating-icon">🥤</div>
-    <div class="floating-icon">🍓</div>
-    <div class="floating-icon">🍧</div>
-  </div>
+<body class="text-gray-800">
 
-  <!-- HEADER -->
-  <header>
-    <div class="container">
-      <div class="nav">
-        <div class="brand" onclick="scrollToId('inicio')">
-          <div class="brand-logo">🍩</div>
-          <div>
-            <div class="brand-text-title">Antojitos Luli Gourmet</div>
-            <div class="brand-text-sub">Mini donas, waffles, frappés & más · Shushufindi</div>
-          </div>
-        </div>
+    <!-- ICONOS DULCES FLOTANDO -->
+    <div class="dulce-float">
+        <span>🍩</span>
+        <span>🧇</span>
+        <span>🥤</span>
+        <span>🍓</span>
+        <span>🍧</span>
+    </div>
 
-        <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
-          <i class="fas fa-bars"></i>
-        </button>
-
-        <div class="nav-links" id="navLinks">
-          <nav>
-            <ul>
-              <li><a href="#inicio">Inicio</a></li>
-              <li><a href="#menu">Menú</a></li>
-              <li><a href="#proceso">Cómo pedir</a></li>
-              <li><a href="#opiniones">Opiniones</a></li>
-              <li><a href="#contacto">Contacto</a></li>
-            </ul>
-          </nav>
-          <div class="nav-actions">
-            <a
-              class="btn-nav-whatsapp"
-              target="_blank"
-              href="https://api.whatsapp.com/send?phone=593939347588&text=Hola%20Antojitos%20Luli%20Gourmet,%20quiero%20información%20del%20menú."
-            >
-              <i class="fab fa-whatsapp"></i>
-              <span>Pedir por WhatsApp</span>
+    <!-- HEADER -->
+    <header class="bg-white/95 backdrop-blur-md shadow-md sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 md:px-6 py-2 flex justify-between items-center">
+            <a href="#" onclick="showPage('home')" class="flex items-center gap-3">
+                <div class="h-12 w-12 rounded-full bg-gradient-to-tr from-pink-300 via-amber-200 to-sky-200 flex items-center justify-center shadow-md">
+                    <span class="text-2xl">🍩</span>
+                </div>
+                <div class="leading-tight">
+                    <h1 class="text-sm md:text-base font-extrabold text-pink-500 uppercase tracking-widest">
+                        ANTOJITOS LULI
+                    </h1>
+                    <p class="text-xs md:text-sm text-gray-500">
+                        Mini donas · waffles · frappés · chamoyadas
+                    </p>
+                </div>
             </a>
-            <button class="cart-button" id="openCart" aria-label="Ver carrito">
-              <i class="fas fa-shopping-bag"></i>
-              <div class="cart-count" id="cartCount">0</div>
+
+            <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-600">
+                <a href="#productos" class="hover:text-pink-500 transition-colors">Menú</a>
+                <a href="#experiencia" class="hover:text-pink-500 transition-colors">Local</a>
+                <a href="#footer-contact" class="hover:text-pink-500 transition-colors">Contacto</a>
+            </nav>
+
+            <button id="cart-button"
+                    onclick="showPage('checkout')"
+                    class="relative bg-pink-500 text-white px-4 py-2 rounded-full font-bold hover:bg-pink-600 transition-colors flex items-center gap-2 shadow-lg">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="hidden sm:inline">Carrito</span>
+                <span id="cart-count"
+                      class="absolute -top-2 -right-2 bg-purple-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    0
+                </span>
             </button>
-          </div>
         </div>
-      </div>
-    </div>
-  </header>
+    </header>
 
-  <main>
-    <!-- HERO -->
-    <section id="inicio">
-      <div class="container">
-        <div class="hero">
-          <div>
-            <div class="hero-tag">
-              <span>Ventas en local y pedidos a domicilio en Shushufindi</span>
-            </div>
-            <h1 class="hero-title">
-              Mini donas, waffles, frappés y chamoyadas
-              <span class="highlight">para tus antojitos más ricos</span>
-            </h1>
-            <p class="hero-subtitle">
-              En <strong>Antojitos Luli Gourmet</strong> preparamos mini donitas, waffles, frappés, chamoyadas, micheladas,
-              bolos de tres leches y frutas con crema. Puedes venir al local o hacer tu pedido por WhatsApp
-              para recoger o pedir a domicilio.
-            </p>
-            <div class="hero-badges">
-              <div class="badge"><i class="fas fa-check-circle"></i> Especialidad en mini donas y bolos tres leches</div>
-              <div class="badge"><i class="fas fa-check-circle"></i> Preparado al momento</div>
-              <div class="badge"><i class="fas fa-check-circle"></i> Barrio 4 de Octubre · Shushufindi</div>
-            </div>
-
-            <div class="hero-cta">
-              <a href="#menu" class="btn-primary">
-                🍩 Ver menú y agregar al carrito
-              </a>
-              <a
-                class="btn-secondary"
-                target="_blank"
-                href="https://api.whatsapp.com/send?phone=593939347588&text=Hola,%20quiero%20hacer%20un%20pedido%20en%20Antojitos%20Luli%20Gourmet."
-              >
-                <i class="fab fa-whatsapp"></i>
-                <span>Pedir directo por WhatsApp</span>
-              </a>
-            </div>
-
-            <div class="hero-strip">
-              <span class="label">Ubicación</span>
-              <span>Av. Napo frente al pozo 77 · Casa color fucsia “La casa de Liam”.</span>
-            </div>
-          </div>
-
-          <div class="hero-right">
-            <div class="hero-card">
-              <div class="hero-card-header">
-                <div>
-                  <div class="hero-card-title">Combo estrella: Mini donitas + frappé</div>
-                  <div style="font-size:0.8rem;color:var(--texto-suave);">
-                    Ideal para tus tardes de antojo o para compartir.
-                  </div>
+    <!-- PÁGINA PRINCIPAL -->
+    <main id="home-page" class="relative z-10">
+        <!-- HERO -->
+        <section class="py-16 md:py-20">
+            <div class="max-w-5xl mx-auto px-4 md:px-6 text-center">
+                <p class="inline-flex items-center gap-2 bg-white/80 rounded-full px-4 py-1 text-xs font-semibold text-gray-600 shadow-sm mb-4">
+                    <i class="fas fa-location-dot text-pink-500"></i>
+                    Shushufindi · Barrio 4 de Octubre · Av. Napo frente al pozo 77
+                </p>
+                <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4 text-pink-600 glossy-text">
+                    Tus antojitos dulces, <span class="brand-lilac">en un solo lugar</span>.
+                </h1>
+                <p class="text-base md:text-lg max-w-2xl mx-auto text-gray-700 mb-6">
+                    En <strong>Antojitos Luli Gourmet</strong> preparamos mini donitas, waffles, frappés,
+                    chamoyadas, micheladas, bolos de tres leches y frutas con crema.  
+                    Puedes venir al local o pedir a domicilio por WhatsApp.
+                </p>
+                <div class="flex flex-wrap justify-center gap-3 mb-6">
+                    <div class="bg-white/90 rounded-full px-4 py-2 text-xs md:text-sm text-gray-700 shadow">
+                        <i class="fas fa-check text-pink-500 mr-1"></i> Especialidad en mini donas y bolos tres leches
+                    </div>
+                    <div class="bg-white/90 rounded-full px-4 py-2 text-xs md:text-sm text-gray-700 shadow">
+                        <i class="fas fa-check text-pink-500 mr-1"></i> Pedidos para tardes, reuniones y cumpleaños
+                    </div>
                 </div>
-                <div class="hero-card-tag">Más pedido</div>
-              </div>
-              <div class="product-img" style="background-image:url('https://i.postimg.cc/zHmQRS1N/Whats-App-Image-2025-11-15-at-14-59-05.jpg');"></div>
-              <div class="hero-price-row">
-                <div class="hero-price-main">Desde $3,50</div>
-                <div class="hero-price-note">Mini donitas clásicas + frappé sabor a elección</div>
-              </div>
-              <div class="hero-card-footer">
-                <div class="hero-pill">
-                  <i class="fas fa-heart"></i>
-                  <span>“Tu antojito Luli para la tarde”</span>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#productos"
+                       class="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg text-sm md:text-base flex items-center gap-2">
+                        <i class="fas fa-cookie-bite"></i> Ver menú y armar pedido
+                    </a>
+                    <a href="https://wa.me/593939347588?text=Hola,%20quiero%20hacer%20un%20pedido%20en%20Antojitos%20Luli%20Gourmet."
+                       target="_blank"
+                       class="bg-white/90 hover:bg-white text-pink-600 font-semibold py-3 px-6 rounded-full shadow text-sm md:text-base flex items-center gap-2">
+                        <i class="fab fa-whatsapp"></i> Pedir directo por WhatsApp
+                    </a>
                 </div>
-                <button
-                  class="btn-secondary"
-                  type="button"
-                  onclick="addProductFromHero()"
-                >
-                  <i class="fas fa-plus"></i>
-                  <span>Agregar combo al carrito</span>
+            </div>
+        </section>
+
+        <!-- PRODUCTOS -->
+        <section id="productos" class="py-10">
+            <div class="max-w-6xl mx-auto px-4 md:px-6">
+                <h2 class="text-3xl font-bold mb-8 text-center text-pink-600">
+                    Menú Antojitos Luli
+                </h2>
+                <p class="text-center text-gray-700 mb-8">
+                    Elige tus productos favoritos, ajusta la cantidad y agrégalos al carrito.  
+                    Al final envías TODO por WhatsApp en un solo mensaje.
+                </p>
+                <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- JS inyecta las tarjetas aquí -->
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCIA / LOCAL -->
+        <section id="experiencia" class="pb-16">
+            <div class="max-w-6xl mx-auto px-4 md:px-6">
+                <div class="bg-white/95 rounded-2xl shadow-xl p-6 md:p-10 md:flex items-center gap-10">
+                    <div class="md:w-1/2 mb-6 md:mb-0">
+                        <img src="https://i.postimg.cc/zHmQRS1N/Whats-App-Image-2025-11-15-at-14-59-05.jpg"
+                             alt="Antojitos Luli Gourmet"
+                             class="rounded-xl shadow w-full h-auto object-cover"
+                             onerror="this.onerror=null;this.src='https://placehold.co/600x400/FFE4F3/9D174D?text=Antojitos+Luli';">
+                    </div>
+                    <div class="md:w-1/2">
+                        <h2 class="text-2xl md:text-3xl font-bold mb-3 text-pink-600">
+                            Tu rincón dulce en el Barrio 4 de Octubre
+                        </h2>
+                        <p class="text-gray-700 mb-3">
+                            Estamos en <strong>Shushufindi</strong>, en la Av. Napo frente al pozo 77,
+                            en la casa color fucsia que dice “La casa de Liam”.
+                        </p>
+                        <p class="text-gray-700 mb-3">
+                            Ven con tu familia, pide tus antojitos para la tarde, o arma detallitos para cumpleaños
+                            y aniversarios. También podemos enviar a domicilio dentro del sector.
+                        </p>
+                        <p class="text-gray-700">
+                            Horario: <strong>Lunes a jueves 14h00 a 19h00</strong> ·
+                            <strong>Viernes y sábado 14h00 a 21h00</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PÁGINA CHECKOUT / FINALIZAR PEDIDO -->
+    <main id="checkout-page" class="hidden relative z-10 py-12 md:py-16">
+        <div class="max-w-6xl mx-auto px-4 md:px-6">
+            <h2 class="text-3xl md:text-4xl text-center text-pink-600 glossy-text mb-10">
+                Finalizar pedido
+            </h2>
+
+            <div id="cart-empty-message" class="hidden text-center py-12 bg-white/90 rounded-2xl shadow">
+                <i class="fas fa-shopping-cart text-gray-300 text-5xl mb-3"></i>
+                <p class="text-gray-600 text-lg mb-4">Tu carrito está vacío.</p>
+                <button onclick="showPage('home')"
+                        class="bg-pink-500 text-white text-sm md:text-base font-semibold py-3 px-8 rounded-full hover:bg-pink-600 transition-colors">
+                    Ver menú
                 </button>
-              </div>
             </div>
-          </div>
+
+            <div id="cart-content" class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <!-- DATOS DEL CLIENTE -->
+                <div>
+                    <h3 class="text-xl md:text-2xl text-pink-600 mb-4">1. Tus datos y tipo de pedido</h3>
+                    <div class="bg-white/95 p-6 rounded-xl shadow-md">
+                        <form id="order-form">
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700 font-semibold mb-1 text-sm">Nombre completo</label>
+                                <input type="text" id="name" name="name" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Tu nombre" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="phone" class="block text-gray-700 font-semibold mb-1 text-sm">Número de WhatsApp</label>
+                                <input type="tel" id="phone" name="phone" class="w-full px-3 py-2 border rounded-lg text-sm" placeholder="Ej: 0999999999" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-semibold mb-1 text-sm">Tipo de pedido</label>
+                                <select id="orderType" class="w-full px-3 py-2 border rounded-lg text-sm">
+                                    <option value="local">Consumir en el local</option>
+                                    <option value="domicilio">Pedido a domicilio</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label for="address" class="block text-gray-700 font-semibold mb-1 text-sm">
+                                    Dirección (solo si pides a domicilio)
+                                </label>
+                                <textarea id="address" name="address" rows="3"
+                                          class="w-full px-3 py-2 border rounded-lg text-sm"
+                                          placeholder="Barrio, calle, referencia..."></textarea>
+                            </div>
+                            <div class="mb-4 flex justify-center">
+                                <button type="button" id="share-location-btn-checkout"
+                                        class="w-full bg-sky-500 text-white text-xs md:text-sm font-bold py-2 px-4 rounded-full hover:bg-sky-600 transition-colors flex items-center justify-center gap-2">
+                                    <i class="fas fa-map-marker-alt"></i> Compartir ubicación (Google Maps)
+                                </button>
+                            </div>
+                            <p id="location-status-checkout" class="text-xs text-center text-green-600 font-semibold mt-1"></p>
+                            <div class="mb-2">
+                                <label for="extra" class="block text-gray-700 font-semibold mb-1 text-sm">Notas del pedido</label>
+                                <textarea id="extra" rows="2"
+                                          class="w-full px-3 py-2 border rounded-lg text-sm"
+                                          placeholder="Sabores, sin hielo, sin crema, etc."></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- RESUMEN DEL CARRITO + PAGO -->
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl md:text-2xl text-pink-600">2. Resumen de tu pedido</h3>
+                        <button id="clear-cart-btn"
+                                class="text-xs md:text-sm text-rose-400 hover:text-rose-600 font-semibold">
+                            Vaciar carrito
+                        </button>
+                    </div>
+                    <div id="checkout-summary" class="bg-white/95 p-6 rounded-xl shadow-md mb-6 text-sm">
+                        <!-- JS inyecta el resumen -->
+                    </div>
+                    <div class="bg-white/95 p-6 rounded-xl shadow-md text-sm">
+                        <h4 class="text-base font-bold text-gray-700 mb-3">Datos para transferencia / depósito</h4>
+                        <div class="bg-pink-50 border border-pink-200 text-pink-900 p-3 rounded-lg space-y-1">
+                            <!-- EDITA ESTO CON LOS DATOS REALES DE LULI -->
+                            <p><strong>Banco:</strong> Banco Pichincha</p>
+                            <p><strong>Tipo de cuenta:</strong> Ahorros</p>
+                            <p><strong>N.º de cuenta:</strong> 0000000000</p>
+                            <p><strong>Titular:</strong> ANTOJITOS LULI GOURMET</p>
+                            <p class="text-[11px] mt-1">
+                                *Luego de transferir, envía el comprobante por WhatsApp junto con tu pedido.*
+                            </p>
+                        </div>
+                    </div>
+                    <button type="submit" form="order-form" id="submit-order-btn"
+                            class="w-full bg-green-500 text-white text-sm md:text-base font-semibold py-3 rounded-full mt-6 hover:bg-green-600 transition-colors flex items-center justify-center gap-2 shadow-md">
+                        <i class="fab fa-whatsapp"></i> Enviar pedido por WhatsApp
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </section>
+    </main>
 
-    <!-- MENÚ PRINCIPAL CON CARRITO -->
-    <section id="menu">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Menú rápido para tu pedido</h2>
-          <p class="section-subtitle">
-            Elige tus productos, agrégalos al carrito y al final envías todo tu pedido por WhatsApp.
-            Puedes consumir en el local o pedir a domicilio dentro de Shushufindi.
-          </p>
+    <!-- FOOTER -->
+    <footer id="footer-contact" class="bg-gray-900/85 text-gray-200 pt-10 pb-6 mt-12 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 md:px-6 text-center md:text-left">
+            <div class="grid md:grid-cols-3 gap-8 mb-6">
+                <div>
+                    <h4 class="font-bold text-lg mb-2 text-white">Antojitos Luli Gourmet</h4>
+                    <p class="text-sm">
+                        Mini donas, waffles, frappés, chamoyadas, micheladas, bolos tres leches y frutas con crema
+                        en Shushufindi.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-2 text-white">Contacto</h4>
+                    <p class="text-sm mb-1">
+                        <i class="fab fa-whatsapp mr-2"></i>
+                        <a href="https://wa.me/593939347588" target="_blank" class="hover:text-white">
+                            +593 93 934 7588
+                        </a>
+                    </p>
+                    <p class="text-sm mb-1">
+                        <i class="fas fa-phone mr-2"></i> 099 048 4256
+                    </p>
+                    <p class="text-sm">
+                        <i class="fas fa-envelope mr-2"></i> josselynmaittejuradoangulo16@gmail.com
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-2 text-white">Ubicación y horario</h4>
+                    <p class="text-sm mb-1">
+                        <i class="fas fa-location-dot mr-2"></i>
+                        Av. Napo frente al pozo 77, casa fucsia “La casa de Liam”, Barrio 4 de Octubre, Shushufindi.
+                    </p>
+                    <p class="text-sm">Lunes a jueves: 14h00 - 19h00</p>
+                    <p class="text-sm">Viernes y sábado: 14h00 - 21h00</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between gap-3 border-t border-white/20 pt-4 text-xs text-gray-400">
+                <p>© 2025 Antojitos Luli Gourmet. Todos los derechos reservados.</p>
+                <div class="flex items-center gap-3">
+                    <a href="https://www.facebook.com/share/17LH8gx5Gv/" target="_blank" class="hover:text-white">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/antijitos_luli?igsh=aXJhOHBscWJwd3Mx" target="_blank" class="hover:text-white">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@antojitosluligourmet?_r=1&_t=ZM-91NOAHMlW5w" target="_blank" class="hover:text-white">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
         </div>
+    </footer>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --------- CONFIG ---------
+        const WHATSAPP_NUMBER = '593939347588'; // Luli
 
-        <!-- CATEGORÍA: MINI DONAS -->
-        <h3 class="section-title" style="font-size:1.4rem; text-align:left; margin-bottom:1.2rem;">🍩 Mini donas</h3>
-        <div class="grid grid-3" style="margin-bottom:2.5rem;">
-          <!-- Producto: Mini donitas x4 -->
-          <div class="card">
-            <div class="product-img" style="background-image:url('https://i.postimg.cc/30gcj4K3/Whats-App-Image-2025-11-15-at-14-59-07-1.jpg');"></div>
-            <div class="card-title">Mini donitas clásicas x4</div>
-            <div class="card-text">4 mini donitas con 1 topping y 1 jalea. Perfectas para un antojito rápido.</div>
-            <div class="price-row">
-              <div class="price-main">$1,00</div>
-              <div class="price-note">Porción individual</div>
-            </div>
-            <div class="chip-row">
-              <span class="chip">Con toppings</span>
-              <span class="chip">Hechas al momento</span>
-            </div>
-            <button
-              class="btn-add"
-              data-id="donas4"
-              data-name="Mini donitas clásicas x4"
-              data-price="1"
-              type="button"
-            >
-              <i class="fas fa-plus"></i> Agregar al carrito
-            </button>
-          </div>
+        // Productos principales (puedes agregar más o editar precios/nombres)
+        const products = [
+            // MINI DONAS
+            { id: 1, name: 'Mini donitas clásicas x4', price: 1.00, 
+              img: 'https://i.postimg.cc/30gcj4K3/Whats-App-Image-2025-11-15-at-14-59-07-1.jpg',
+              desc: '4 mini donitas con 1 topping y 1 jalea.' },
+            { id: 2, name: 'Mini donitas clásicas x8', price: 2.00, 
+              img: 'https://i.postimg.cc/BPWz1cG0/Whats-App-Image-2025-11-15-at-14-59-05-1.jpg',
+              desc: '8 mini donitas con 2 toppings y 2 jaleas.' },
+            { id: 3, name: 'Mini donitas mix x12', price: 3.00, 
+              img: 'https://i.postimg.cc/MfkLjb8q/Whats-App-Image-2025-11-15-at-14-59-05-2.jpg',
+              desc: '12 mini donitas con toppings, jaleas y frutitas.' },
 
-          <!-- Producto: Mini donitas x8 -->
-          <div class="card">
-            <div class="product-img" style="background-image:url('https://i.postimg.cc/BPWz1cG0/Whats-App-Image-2025-11-15-at-14-59-05-1.jpg');"></div>
-            <div class="card-title">Mini donitas clásicas x8</div>
-            <div class="card-text">8 mini donitas con 2 toppings y 2 jaleas. Ideal para compartir.</div>
-            <div class="price-row">
-              <div class="price-main">$2,00</div>
-              <div class="price-note">Bandeja pequeña</div>
-            </div>
-            <div class="chip-row">
-              <span class="chip">Para compartir</span>
-              <span class="chip">Dulce y esponjoso</span>
-            </div>
-            <button
-              class="btn-add"
-              data-id="donas8"
-              data-name="Mini donitas clásicas x8"
-              data-price="2"
-              type="button"
-            >
-              <i class="fas fa-plus"></i> Agregar al carrito
-            </button>
-          </div>
+            // WAFFLES
+            { id: 4, name: 'Waffle sencilla', price: 2.00, 
+              img: 'https://i.postimg.cc/K3nH7kZx/Whats-App-Image-2025-11-15-at-14-59-06.jpg',
+              desc: 'Waffle con 1 topping y 1 jalea.' },
+            { id: 5, name: 'Waffle con frutas', price: 2.25, 
+              img: 'https://i.postimg.cc/T58sWqXT/Whats-App-Image-2025-11-15-at-14-59-06-1.jpg',
+              desc: 'Waffle con frutas frescas y jalea.' },
+            { id: 6, name: 'Waffle mix Luli', price: 3.50, 
+              img: 'https://i.postimg.cc/bSQB0Dq7/Whats-App-Image-2025-11-15-at-14-59-06-2.jpg',
+              desc: 'Waffle con frutas, toppings y jaleas combinadas.' },
 
-          <!-- Producto: Mini donitas mix -->
-          <div class="card">
-            <div class="product-img" style="background-image:url('https://i.postimg.cc/MfkLjb8q/Whats-App-Image-2025-11-15-at-14-59-05-2.jpg');"></div>
-            <div class="card-title">Mini donitas mix x12</div>
-            <div class="card-text">12 mini donitas con mezcla de toppings, jaleas y frutas.</div>
-            <div class="price-row">
-              <div class="price-main">$3,00</div>
-              <div class="price-note">Surtido Luli</div>
-            </div>
-            <div class="chip-row">
-              <span class="chip">Toppings + jaleas</span>
-              <span class="chip">Con fruta</span>
-            </div>
-            <button
-              class="btn-add"
-              data-id="donas12mix"
-              data-name="Mini donitas mix x12"
-              data-price="3"
-              type="button"
-            >
-              <i class="fas fa-plus"></i> Agregar al carrito
-            </button>
-          </div>
-        </div>
+            // FRAPPÉS & CHAMOYADAS
+            { id: 7, name: 'Frappé de café', price: 2.50, 
+              img: 'https://i.postimg.cc/xNrZbyVB/Whats-App-Image-2025-11-15-at-14-59-11-2.jpg',
+              desc: 'Frappé de café frío y cremoso.' },
+            { id: 8, name: 'Frappé sabor a elección', price: 3.50, 
+              img: 'https://i.postimg.cc/MfyF0MWV/Whats-App-Image-2025-11-15-at-14-59-08.jpg',
+              desc: 'Chicle, chocolate, oreo, fresa, coco, tango, pay de maracuyá o pay de fresa.' },
+            { id: 9, name: 'Chamoyada (fresa/mango/piña/maracuyá)', price: 3.00, 
+              img: 'https://i.postimg.cc/tnhMdZXx/Whats-App-Image-2025-11-15-at-14-59-08-2.jpg',
+              desc: 'Chamoyada fría con fruta y tajín.' },
 
-        <!-- CATEGORÍA: WAFFLES -->
-        <h3 class="section-title" style="font-size:1.4rem; text-align:left; margin-bottom:1.2rem;">🧇 Waffles</h3>
-        <div class="grid grid-3" style="margin-bottom:2.5rem;">
-          <div class="card">
-            <div class="product-img" style="background-image:url('https://i.postimg.cc/K3nH7kZx/Whats-App-Image-2025-11-15-at-14-59-06.jpg');"></div>
-            <div class="card-title">Waffle sencilla</div>
-            <div class="card-text">Waffle con 1 topping y 1 jalea.</div>
-            <div class="price-row">
-              <div class="price-main">$2,00</div>
-              <div class="price-note">Porción individual</div>
-            </div>
-            <button
-              class="btn-add"
-              data-id="waffleSimple"
-              data-name="Waffle sencilla (1 topping + 1 jalea)"
-              data-price="2"
-              type="button"
-            >
-              <i class="fas fa-plus"></i> Agregar al carrito
-            </button>
-          </div>
+            // MICHELADAS, BOLOS, FRUTAS
+            { id: 10, name: 'Michelada botanera', price: 6.00, 
+              img: 'https://i.postimg.cc/6TRgxSCY/Whats-App-Image-2025-11-15-at-14-59-09.jpg',
+              desc: 'Michelada frutal con botana y cerveza a elección.' },
+            { id: 11, name: 'Bolo tres leches (unidad)', price: 0.50, 
+              img: 'https://i.postimg.cc/0KpBGM86/Whats-App-Image-2025-11-15-at-14-59-08-1.jpg',
+              desc: 'Bolo frío a base de tres leches. Varios sabores.' },
+            { id: 12, name: 'Fresas / frutas con crema', price: 3.50, 
+              img: 'https://i.postimg.cc/8f8YrBg9/Whats-App-Image-2025-11-15-at-14-59-11.jpg',
+              desc: 'Copas frías de fresas o frutas mixtas con crema.' },
+            { id: 13, name: 'Detallito dulce especial', price: 10.00, 
+              img: 'https://i.postimg.cc/Rqfyx8wg/Whats-App-Image-2025-11-15-at-14-59-09-1.jpg',
+              desc: 'Arreglo dulce para cumpleaños, aniversarios y más.' },
+        ];
 
-          <div class="card">
-            <div class="product-img" style="background-image:url('https://i.postimg.cc/T58sWqXT/Whats-App-Image-2025-11-15-at-14-59-06-1.jpg');"></div>
-            <div class="card-title">Waffle con frutas</div>
-            <div class="card-text">Waffle con frutas frescas y jalea.</div>
-            <div class="price-row">
-              <div class="price-main">$2,25</div>
-              <div class="price-note">1 fruta + 1 jalea</div>
-            </div>
-            <button
-              class="btn-add"
-              data-id="waffleFruta"
-              data-name="Waffle con frutas"
-              data-price="2.25"
-              type="button"
-            >
-              <i class="fas fa-plus"></i> Agregar al carrito
-            </button>
-          </div>
+        // --------- DOM ---------
+        const productList       = document.getElementById('product-list');
+        const cartCountEl       = document.getElementById('cart-count');
+        const orderForm         = document.getElementById('order-form');
+        const checkoutSummary   = document.getElementById('checkout-summary');
+        const clearCartBtn      = document.getElementById('clear-cart-btn');
+        const cartEmptyMessage  = document.getElementById('cart-empty-message');
+        const cartContent       = document.getElementById('cart-content');
+        const shareLocationBtn  = document.getElementById('share-location-btn-checkout');
+        const locationStatus    = document.getElementById('location-status-checkout');
 
-          <div class="card">
-            <div class="product-img" style="background-image:url('https://i.postimg.cc/bSQB0Dq7/Whats-App-Image-2025-11-15-at-14-59-06-2.jpg');"></div>
-            <div class="card-title">Waffle mix Luli</div>
-            <div class="card-text">Waffle con frutas, toppings y jaleas combinadas.</div>
-            <div class="price-row">
-              <div class="price-main">$3,50</div>
-              <div class="price-note">Versión mini</div>
-            </div>
-            <button
-              class="btn-add"
-              data-id="waffleMix"
-              data-name="Waffle mix Luli"
-              data-price="3.5"
-              type="button"
-            >
-              <i class="fas fa-plus"></i> Agregar al carrito
-            </button>
-          </div>
-        </div>
+        // Estado
+        let cart = {};          // { id: { ...product, quantity } }
+        let sharedLocation = null;
 
-        <!-- CATEGORÍA: FRAPPÉS & CHAMOYADAS -->
-        <h3 class="section-title" style="font-size:1.4rem; text-align:left; margin-bottom:1.2rem;">🥤 Frappés & chamoyadas</h3>
-        <div class="grid grid-3" style="margin-bottom:2.5rem;">
-          <div class="card">
-            <div class="product-img" style="background-image:url('https://i.postimg.cc/xNrZbyVB/Whats-App-Image-2025-11-15-at-14-59-11-2.jpg');"></div>
-            <div class="card-title">Frappé de café</div>
-            <div class="card-text">Clásico frappé de café, frío y cremoso.</div>
-            <div class="price-row">
-              <div class="price-main">$2,50</div>
-              <div class="price-note">Vaso individual</div>
-            </div>
-            <button
-              class="btn-add"
-              data-id="frappeCafe"
-              data-name="Frappé de café"
-              data-price="2.5"
-              type="button"
-            >
-              <i class="fas fa-plus"></i> Agregar al carrito
-            </button>
-          </div>
-
-          <div class="card">
-            <div class="product-img" style="background-image:url('https://i.postimg.cc/MfyF0MWV/Whats-App-Image-2025-11-15-at-14-59-08.jpg');"></div>
-            <div class="card-title">Frappé sabor a elección</div>
-            <div class="card-text">Chicle, chocolate, oreo, fresa, coco, galleta tango, pay de maracuyá o pay de fresa.</div>
-            <div class="price-row">
-              <div class="price-main">$3,50 - $4,00</div>
-              <div class="price-note">Según sabor</div>
-            </div>
-            <button
-              class="btn-add"
-              data-id="frappeSabor"
-              data-name="Frappé sabor a elección"
-              data-price="3.5"
-              type="button"
-            >
-              <i class="fas fa-plus"></i> Agregar al carrito
-            </button>
-          </div>
-
-          <div class="card">
-            <div class="product-img" style="background-image:url('https://i.postimg.cc/tnhMdZXx/Whats-App-Image-2025-11-15-at-14-59-08-2.jpg');"></div>
-            <div class="card-title">Chamoyada de fresa o mango</div>
-            <div class="card-text">Chamoyada fría con fruta y tajín.</div>
-            <div class="price-row">
-              <div class="price-main">$3,00</div>
-              <div class="price-note">Sabor a elección</div>
-            </div>
-            <button
-              class="btn-add"
-              data-id="chamoyada"
-              data-name="Chamoyada (fresa/mango/piña/maracuyá)"
-              data-price="3"
-              type="button"
-            >
-              <i class="fas fa-plus"></i> Agregar al carrito
-            </button>
-          </div>
-        </div>
-
-        <!-- CATEGORÍA: MICHELADAS & BOLOS & FRUTAS -->
-        <h3 class="section-title" style="font-size:1.4rem; text-align:left; margin-bottom:1.2rem;">🍺 Micheladas · 🍮 Bolos · 🍓 Frutas con crema</h3>
-        <div class="grid grid-3">
-          <div class="card">
-            <div class="product-img" style="background-image:url('https://i.postimg.cc/6TRgxSCY/Whats-App-Image-2025-11-15-at-14-59-09.jpg');"></div>
-            <div class="card-title">Michelada botanera</div>
-            <div class="card-text">Michelada frutal con botana y cerveza a elección.</div>
-            <div class="price-row">
-              <div class="price-main">$6,00</div>
-              <div class="price-note">Incluye botana</div>
-            </div>
-            <button
-              class="btn-add"
-              data-id="micheladaBotanera"
-              data-name="Michelada botanera"
-              data-price="6"
-              type="button"
-            >
-              <i class="fas fa-plus"></i> Agregar al carrito
-            </button>
-          </div>
-
-          <div class="card">
-            <div class="product-img" style="background-image:url('https://i.postimg.cc/0KpBGM86/Whats-App-Image-2025-11-15-at-14-59-08-1.jpg');"></div>
-            <div class="card-title">Bolo tres leches</div>
-            <div class="card-text">Bolo frío a base de tres leches. Sabores: chocolate, oreo, galak, vainilla, tango, chicle, ron pasa, arazá.</div>
-            <div class="price-row">
-              <div class="price-main">$0,50</div>
-              <div class="price-note">Por unidad</div>
-            </div>
-            <button
-              class="btn-add"
-              data-id="boloTresLeches"
-              data-name="Bolo tres leches (sabor a elección)"
-              data-price="0.5"
-              type="button"
-            >
-              <i class="fas fa-plus"></i> Agregar al carrito
-            </button>
-          </div>
-
-          <div class="card">
-            <div class="product-img" style="background-image:url('https://i.postimg.cc/8f8YrBg9/Whats-App-Image-2025-11-15-at-14-59-11.jpg');"></div>
-            <div class="card-title">Fresas / frutas con crema</div>
-            <div class="card-text">Copas frías de fresas con crema o frutas mixtas con crema.</div>
-            <div class="price-row">
-              <div class="price-main">$3,50 - $3,75</div>
-              <div class="price-note">Según elección</div>
-            </div>
-            <button
-              class="btn-add"
-              data-id="frutasCrema"
-              data-name="Fresas o frutas con crema"
-              data-price="3.5"
-              type="button"
-            >
-              <i class="fas fa-plus"></i> Agregar al carrito
-            </button>
-          </div>
-
-          <div class="card">
-            <div class="product-img" style="background-image:url('https://i.postimg.cc/Rqfyx8wg/Whats-App-Image-2025-11-15-at-14-59-09-1.jpg');"></div>
-            <div class="card-title">Detallito dulce</div>
-            <div class="card-text">Arreglo dulce para cumpleaños, aniversarios y fechas especiales.</div>
-            <div class="price-row">
-              <div class="price-main">Desde $10,00</div>
-              <div class="price-note">Se arma según tu presupuesto</div>
-            </div>
-            <button
-              class="btn-add"
-              data-id="detallito"
-              data-name="Detallito dulce especial"
-              data-price="10"
-              type="button"
-            >
-              <i class="fas fa-plus"></i> Agregar al carrito
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROCESO -->
-    <section id="proceso">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">¿Cómo funciona tu pedido?</h2>
-          <p class="section-subtitle">
-            Igual que en Asados al Barril, pero en versión dulce: eliges, agregas al carrito y enviamos todo directo a WhatsApp.
-          </p>
-        </div>
-
-        <div class="steps">
-          <div class="step">
-            <div class="step-number">1</div>
-            <div class="step-title">Elige tus antojitos</div>
-            <div class="step-text">Mini donas, waffles, frappés, chamoyadas, micheladas, bolos o frutas con crema.</div>
-          </div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <div class="step-title">Agrega al carrito</div>
-            <div class="step-text">Selecciona cuántas unidades quieres de cada producto.</div>
-          </div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <div class="step-title">Elige cómo quieres tu pedido</div>
-            <div class="step-text">Puedes elegir “Consumir en el local” o “Pedido a domicilio”.</div>
-          </div>
-          <div class="step">
-            <div class="step-number">4</div>
-            <div class="step-title">Envíalo por WhatsApp</div>
-            <div class="step-text">El sistema arma el mensaje con tu pedido y solo confirmas el horario.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TESTIMONIOS -->
-    <section id="opiniones">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Lo que dicen de Antojitos Luli Gourmet</h2>
-          <p class="section-subtitle">
-            Clientes del barrio 4 de Octubre y de Shushufindi que ya probaron sus antojitos.
-          </p>
-        </div>
-
-        <div class="grid grid-2">
-          <div class="card testimonial-card">
-            <div class="testimonial-header">
-              <div class="avatar">J</div>
-              <div>
-                <div class="testimonial-name">Jenny Herrera</div>
-                <div class="testimonial-city">Barrio 4 de Octubre · Shushufindi</div>
-              </div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">
-              “Las mini donitas y los bolos son un vicio. Siempre pedimos para las tardes y cuando hay cumpleaños en la casa.”
-            </p>
-          </div>
-
-          <div class="card testimonial-card">
-            <div class="testimonial-header">
-              <div class="avatar">M</div>
-              <div>
-                <div class="testimonial-name">Marco L.</div>
-                <div class="testimonial-city">Shushufindi</div>
-              </div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">
-              “Los waffles y las chamoyadas se han vuelto parte de mis fines de semana. Me encanta que puedo pedir por WhatsApp
-              y solo pasar a retirar.”
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA FINAL -->
-    <section>
-      <div class="container">
-        <div class="cta-final">
-          <h2 class="cta-title">¿Listo para tu pedido Luli?</h2>
-          <p class="cta-subtitle">
-            Agrega tus antojitos al carrito o escríbenos directamente. Endulzamos tus tardes en el Barrio 4 de Octubre
-            y alrededores de Shushufindi.
-          </p>
-          <a href="#menu" class="btn-primary">
-            🛒 Ver menú y armar mi pedido
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer id="contacto">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <div class="footer-brand-title">Antojitos Luli Gourmet</div>
-          <p>
-            Bocaditos dulces, mini donas, waffles, frappés, chamoyadas, micheladas, bolos tres leches y frutas con crema
-            en Shushufindi.
-          </p>
-        </div>
-
-        <div class="footer-links">
-          <div class="footer-col">
-            <div class="footer-col-title">Ubicación</div>
-            <p>Ciudad: Shushufindi · Barrio 4 de Octubre</p>
-            <p>Dirección: Av. Napo frente al pozo 77, casa color fucsia “La casa de Liam”.</p>
-          </div>
-          <div class="footer-col">
-            <div class="footer-col-title">Horario</div>
-            <p>Lunes a jueves: 14h00 a 19h00</p>
-            <p>Viernes y sábado: 14h00 a 21h00</p>
-          </div>
-          <div class="footer-col">
-            <div class="footer-col-title">Contacto</div>
-            <p>WhatsApp: +593 939 347 588</p>
-            <p>Teléfono: 099 048 4256</p>
-            <p>Email: josselynmaittejuradoangulo16@gmail.com</p>
-          </div>
-          <div class="footer-col">
-            <div class="footer-col-title">Redes</div>
-            <div class="footer-social">
-              <a href="https://www.facebook.com/share/17LH8gx5Gv/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-              <a href="https://www.instagram.com/antijitos_luli?igsh=aXJhOHBscWJwd3Mx" target="_blank"><i class="fab fa-instagram"></i></a>
-              <a href="https://www.tiktok.com/@antojitosluligourmet?_r=1&_t=ZM-91NOAHMlW5w" target="_blank"><i class="fab fa-tiktok"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <span>© <span id="year"></span> Antojitos Luli Gourmet. Todos los derechos reservados.</span>
-        <span>“Endulzamos tus antojitos más ricos.”</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- BOTÓN WHATSAPP FLOTANTE -->
-  <a
-    class="whatsapp-floating"
-    target="_blank"
-    href="https://api.whatsapp.com/send?phone=593939347588&text=Hola,%20quiero%20hacer%20un%20pedido%20en%20Antojitos%20Luli%20Gourmet."
-    aria-label="Chatear por WhatsApp"
-  >
-    <i class="fab fa-whatsapp"></i>
-  </a>
-
-  <!-- OVERLAY & PANEL CARRITO -->
-  <div class="cart-overlay" id="cartOverlay"></div>
-  <aside class="cart-panel" id="cartPanel">
-    <div class="cart-header">
-      <div class="cart-title">
-        <i class="fas fa-shopping-bag"></i>
-        <span>Tu pedido Luli</span>
-      </div>
-      <button class="cart-close" id="closeCart" aria-label="Cerrar carrito">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <div class="cart-body">
-      <div id="cartItems"></div>
-      <div class="cart-subtotal-row" id="cartSubtotalRow" style="display:none;">
-        <span class="cart-subtotal-label">Total aproximado</span>
-        <span class="cart-subtotal-value" id="cartSubtotal">$0,00</span>
-      </div>
-
-      <div class="cart-options" id="cartOptions" style="display:none;">
-        <div style="margin-bottom:0.3rem; font-weight:600;">Tipo de pedido</div>
-        <div class="order-type-group">
-          <label class="order-type">
-            <input type="radio" name="orderType" value="local" checked />
-            <span>Consumir en el local</span>
-          </label>
-          <label class="order-type">
-            <input type="radio" name="orderType" value="domicilio" />
-            <span>Pedido a domicilio</span>
-          </label>
-        </div>
-        <input
-          type="text"
-          id="clientName"
-          class="cart-input"
-          placeholder="Tu nombre (para identificar tu pedido)"
-        />
-        <input
-          type="text"
-          id="clientAddress"
-          class="cart-input"
-          placeholder="Dirección y referencias (solo si es a domicilio)"
-        />
-        <textarea
-          id="orderNotes"
-          class="cart-input"
-          rows="2"
-          style="resize:vertical;"
-          placeholder="Notas del pedido (sabores, sin hielo, sin crema, etc.)"
-        ></textarea>
-      </div>
-
-      <div class="cart-empty" id="cartEmpty">
-        Aún no has agregado productos. Ve al menú y elige tus antojitos. 🍩
-      </div>
-    </div>
-    <div class="cart-footer">
-      <button class="btn-send" id="sendOrder">
-        <i class="fab fa-whatsapp"></i>
-        <span>Enviar pedido por WhatsApp</span>
-      </button>
-    </div>
-  </aside>
-
-  <script>
-    // Año en footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Menú móvil
-    const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-
-    navToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-    });
-
-    navLinks.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-      });
-    });
-
-    // Scroll suave
-    function scrollToId(id) {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        const targetId = this.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-          e.preventDefault();
-          targetElement.scrollIntoView({ behavior: 'smooth' });
+        // --------- RENDER PRODUCTOS ---------
+        function renderProducts() {
+            productList.innerHTML = '';
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'bg-white/95 rounded-2xl text-center overflow-hidden flex flex-col shadow-md hover:shadow-xl transition-all duration-200 hover:-translate-y-1';
+                card.innerHTML = `
+                    <div class="bg-pink-50/70">
+                        <img src="${product.img}" alt="${product.name}"
+                             class="w-full h-52 object-cover"
+                             onerror="this.onerror=null;this.src='https://placehold.co/400x220/FFE4F3/9D174D?text=${product.name.replace(/ /g,'+')}';">
+                    </div>
+                    <div class="p-4 flex flex-col flex-1">
+                        <h3 class="text-lg font-bold mb-1 text-pink-600">${product.name}</h3>
+                        <p class="text-xs text-gray-600 flex-1 mb-2">${product.desc}</p>
+                        <p class="font-bold text-lg text-pink-500 mb-2">$${product.price.toFixed(2)}</p>
+                        <div class="flex items-center justify-center space-x-4 my-2">
+                            <button class="quantity-btn minus-btn bg-gray-200 rounded-full w-8 h-8 text-lg font-bold text-gray-700">-</button>
+                            <span class="quantity-value text-lg font-bold">1</span>
+                            <button class="quantity-btn plus-btn bg-gray-200 rounded-full w-8 h-8 text-lg font-bold text-gray-700">+</button>
+                        </div>
+                        <button class="add-to-cart-btn bg-pink-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-pink-600 transition-colors text-sm mt-2"
+                                data-id="${product.id}">
+                            Añadir al carrito
+                        </button>
+                    </div>
+                `;
+                productList.appendChild(card);
+            });
         }
-      });
-    });
 
-    // CARRITO
-    const WHATSAPP_NUMBER = '593939347588';
-
-    let cart = [];
-
-    const cartCountEl = document.getElementById('cartCount');
-    const cartItemsEl = document.getElementById('cartItems');
-    const cartSubtotalEl = document.getElementById('cartSubtotal');
-    const cartSubtotalRowEl = document.getElementById('cartSubtotalRow');
-    const cartEmptyEl = document.getElementById('cartEmpty');
-    const cartOptionsEl = document.getElementById('cartOptions');
-    const cartPanel = document.getElementById('cartPanel');
-    const cartOverlay = document.getElementById('cartOverlay');
-    const openCartBtn = document.getElementById('openCart');
-    const closeCartBtn = document.getElementById('closeCart');
-    const sendOrderBtn = document.getElementById('sendOrder');
-
-    function formatCurrency(value) {
-      return '$' + value.toFixed(2).replace('.', ',');
-    }
-
-    function updateCartUI() {
-      const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
-      cartCountEl.textContent = totalItems;
-
-      if (cart.length === 0) {
-        cartItemsEl.innerHTML = '';
-        cartEmptyEl.style.display = 'block';
-        cartSubtotalRowEl.style.display = 'none';
-        cartOptionsEl.style.display = 'none';
-        return;
-      }
-
-      cartEmptyEl.style.display = 'none';
-      cartOptionsEl.style.display = 'block';
-
-      cartItemsEl.innerHTML = '';
-      let subtotal = 0;
-
-      cart.forEach(item => {
-        const itemTotal = item.price * item.qty;
-        subtotal += itemTotal;
-
-        const div = document.createElement('div');
-        div.className = 'cart-item';
-        div.innerHTML = `
-          <div>
-            <div class="cart-item-name">${item.name}</div>
-            <div class="cart-item-price">${item.qty} x ${formatCurrency(item.price)} · Subtotal: ${formatCurrency(itemTotal)}</div>
-          </div>
-          <div class="cart-item-controls">
-            <button class="cart-qty-btn" data-action="decrease" data-id="${item.id}">-</button>
-            <span class="cart-qty">${item.qty}</span>
-            <button class="cart-qty-btn" data-action="increase" data-id="${item.id}">+</button>
-          </div>
-        `;
-        cartItemsEl.appendChild(div);
-      });
-
-      cartSubtotalRowEl.style.display = 'flex';
-      cartSubtotalEl.textContent = formatCurrency(subtotal);
-    }
-
-    function addToCart(id, name, price) {
-      price = Number(price);
-      const existing = cart.find(item => item.id === id);
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        cart.push({ id, name, price, qty: 1 });
-      }
-      updateCartUI();
-      openCart();
-    }
-
-    function addProductFromHero() {
-      // Combo estrella: 1 mini donas x4 + 1 frappé sabor elección
-      addToCart('donas4', 'Mini donitas clásicas x4', 1);
-      addToCart('frappeSabor', 'Frappé sabor a elección', 3.5);
-    }
-
-    // Eventos de botones "Agregar al carrito"
-    document.querySelectorAll('.btn-add').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.dataset.id;
-        const name = btn.dataset.name;
-        const price = parseFloat(btn.dataset.price || '0');
-        addToCart(id, name, price);
-      });
-    });
-
-    // Control de cantidades dentro del carrito
-    cartItemsEl.addEventListener('click', (e) => {
-      if (!e.target.classList.contains('cart-qty-btn')) return;
-      const id = e.target.dataset.id;
-      const action = e.target.dataset.action;
-      const item = cart.find(p => p.id === id);
-      if (!item) return;
-
-      if (action === 'increase') {
-        item.qty += 1;
-      } else if (action === 'decrease') {
-        item.qty -= 1;
-        if (item.qty <= 0) {
-          cart = cart.filter(p => p.id !== id);
+        // --------- CARRITO ---------
+        function addToCart(productId, quantity = 1) {
+            if (cart[productId]) {
+                cart[productId].quantity += quantity;
+            } else {
+                const product = products.find(p => p.id == productId);
+                cart[productId] = { ...product, quantity };
+            }
+            updateCartUI();
         }
-      }
-      updateCartUI();
+
+        function updateCartUI() {
+            const totalItems = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
+            cartCountEl.textContent = totalItems;
+            updateCheckoutPage();
+        }
+        
+        function updateCheckoutPage() {
+            if (document.getElementById('checkout-page').classList.contains('hidden')) return;
+
+            let subtotal = 0;
+            let html = '';
+
+            if (Object.keys(cart).length === 0) {
+                cartEmptyMessage.classList.remove('hidden');
+                cartContent.classList.add('hidden');
+                checkoutSummary.innerHTML = '';
+                return;
+            }
+
+            cartEmptyMessage.classList.add('hidden');
+            cartContent.classList.remove('hidden');
+
+            for (const id in cart) {
+                const item = cart[id];
+                subtotal += item.price * item.quantity;
+                html += `
+                    <div class="py-2 border-b last:border-b-0 flex justify-between items-center text-sm">
+                        <div>
+                            <p class="font-semibold">${item.quantity} x ${item.name}</p>
+                        </div>
+                        <span class="font-semibold">$${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `;
+            }
+
+            html += `
+                <div class="mt-4 border-t pt-3 space-y-1 text-sm">
+                    <div class="flex justify-between"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
+                    <div class="flex justify-between font-bold text-lg text-pink-600">
+                        <span>Total</span><span>$${subtotal.toFixed(2)}</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">El valor final puede variar ligeramente según sabores y extras.</p>
+                </div>
+            `;
+            checkoutSummary.innerHTML = html;
+        }
+
+        // --------- EVENTOS PRODUCTOS ---------
+        productList.addEventListener('click', (e) => {
+            const card = e.target.closest('.flex-col');
+            if (!card) return;
+
+            if (e.target.classList.contains('quantity-btn')) {
+                const valueSpan = card.querySelector('.quantity-value');
+                let currentValue = parseInt(valueSpan.textContent);
+                if (e.target.classList.contains('plus-btn')) currentValue++;
+                else if (e.target.classList.contains('minus-btn') && currentValue > 1) currentValue--;
+                valueSpan.textContent = currentValue;
+            }
+
+            if (e.target.classList.contains('add-to-cart-btn')) {
+                const id = e.target.dataset.id;
+                const quantity = parseInt(card.querySelector('.quantity-value').textContent);
+                addToCart(id, quantity);
+                alert(`${quantity} "${products.find(p => p.id == id).name}" agregado(s) al carrito.`);
+                card.querySelector('.quantity-value').textContent = '1';
+            }
+        });
+
+        clearCartBtn.addEventListener('click', () => {
+            if (!confirm('¿Vaciar todo el carrito?')) return;
+            cart = {};
+            updateCartUI();
+        });
+
+        // --------- GEOLOCALIZACIÓN / UBICACIÓN ---------
+        shareLocationBtn.addEventListener('click', () => {
+            if (!navigator.geolocation) {
+                locationStatus.textContent = 'Tu navegador no soporta geolocalización.';
+                locationStatus.classList.remove('text-green-600');
+                locationStatus.classList.add('text-red-500');
+                return;
+            }
+
+            locationStatus.textContent = 'Obteniendo ubicación...';
+            locationStatus.classList.remove('text-red-500');
+            locationStatus.classList.add('text-gray-600');
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    sharedLocation = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                    locationStatus.textContent = '¡Ubicación guardada para el pedido! ✅';
+                    locationStatus.classList.remove('text-gray-600');
+                    locationStatus.classList.add('text-green-600');
+                },
+                () => {
+                    locationStatus.textContent = 'No se pudo obtener la ubicación.';
+                    locationStatus.classList.remove('text-green-600');
+                    locationStatus.classList.add('text-red-500');
+                }
+            );
+        });
+
+        // --------- ENVÍO A WHATSAPP ---------
+        orderForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (Object.keys(cart).length === 0) {
+                alert('Tu carrito está vacío. Agrega productos antes de enviar el pedido.');
+                return;
+            }
+
+            const name     = document.getElementById('name').value.trim();
+            const phone    = document.getElementById('phone').value.trim();
+            const address  = document.getElementById('address').value.trim();
+            const extra    = document.getElementById('extra').value.trim();
+            const orderType = document.getElementById('orderType').value;
+
+            if (!name || !phone) {
+                alert('Por favor, completa tu nombre y número de WhatsApp.');
+                return;
+            }
+
+            if (orderType === 'domicilio' && !address) {
+                alert('Para pedido a domicilio, escribe tu dirección y referencia.');
+                return;
+            }
+
+            let message = `Hola Antojitos Luli Gourmet 👋\nQuiero hacer el siguiente pedido:\n\n`;
+            let total = 0;
+
+            for (const id in cart) {
+                const item = cart[id];
+                message += `• ${item.quantity} x ${item.name}\n`;
+                total += item.price * item.quantity;
+            }
+
+            message += `\nTotal aproximado: $${total.toFixed(2)}\n\n`;
+            message += `Tipo de pedido: *${orderType === 'domicilio' ? 'Domicilio' : 'Consumir en el local'}*\n`;
+            message += `Nombre: ${name}\n`;
+            message += `WhatsApp: ${phone}\n`;
+            if (orderType === 'domicilio') {
+                message += `Dirección: ${address}\n`;
+            }
+            if (sharedLocation) {
+                message += `Ubicación (Google Maps): ${sharedLocation}\n`;
+            }
+            if (extra) {
+                message += `Notas del pedido: ${extra}\n`;
+            }
+
+            message += `\nForma de pago: transferencia/depósito a la cuenta indicada o pago en el local.\n`;
+            message += `\nHorario de atención:\nLunes a jueves 14h00–19h00\nViernes y sábado 14h00–21h00\n`;
+
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+
+            alert('Tu pedido se abrió en WhatsApp. Solo revisa y envíalo. 🩷');
+
+            // Reset
+            cart = {};
+            sharedLocation = null;
+            orderForm.reset();
+            locationStatus.textContent = '';
+            updateCartUI();
+            showPage('home');
+        });
+
+        // --------- NAVEGACIÓN ENTRE PÁGINAS ---------
+        const pages = document.querySelectorAll('main');
+        window.showPage = (pageId) => {
+            pages.forEach(page => page.classList.add('hidden'));
+            document.getElementById(`${pageId}-page`).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (pageId === 'checkout') updateCheckoutPage();
+        };
+
+        // --------- INICIO ---------
+        renderProducts();
+        updateCartUI();
     });
-
-    function openCart() {
-      cartPanel.classList.add('open');
-      cartOverlay.classList.add('open');
-    }
-
-    function closeCart() {
-      cartPanel.classList.remove('open');
-      cartOverlay.classList.remove('open');
-    }
-
-    openCartBtn.addEventListener('click', openCart);
-    closeCartBtn.addEventListener('click', closeCart);
-    cartOverlay.addEventListener('click', closeCart);
-
-    // Enviar pedido por WhatsApp
-    sendOrderBtn.addEventListener('click', () => {
-      if (cart.length === 0) {
-        alert('Primero agrega productos al carrito 🛒');
-        return;
-      }
-
-      const orderType = document.querySelector('input[name="orderType"]:checked')?.value || 'local';
-      const name = document.getElementById('clientName').value.trim();
-      const address = document.getElementById('clientAddress').value.trim();
-      const notes = document.getElementById('orderNotes').value.trim();
-
-      let subtotal = 0;
-      let lines = cart.map(item => {
-        const itemTotal = item.price * item.qty;
-        subtotal += itemTotal;
-        return `- ${item.qty} x ${item.name} (${formatCurrency(item.price)} c/u) = ${formatCurrency(itemTotal)}`;
-      });
-
-      let typeLabel = orderType === 'domicilio'
-        ? 'Pedido a domicilio'
-        : 'Consumir en el local';
-
-      let msg = `Hola Antojitos Luli Gourmet 👋, quiero hacer un pedido.\n\n`;
-      msg += `Tipo de pedido: *${typeLabel}*\n\n`;
-      msg += `*Productos:*\n`;
-      msg += lines.join('\n') + '\n\n';
-      msg += `Total aproximado: *${formatCurrency(subtotal)}*\n\n`;
-
-      if (name) msg += `Nombre: ${name}\n`;
-      if (orderType === 'domicilio' && address) {
-        msg += `Dirección y referencias: ${address}\n`;
-      }
-      if (notes) {
-        msg += `Notas del pedido: ${notes}\n`;
-      }
-      msg += `\nHorario de atención:\nLunes a jueves 14h00–19h00 · Viernes y sábado 14h00–21h00`;
-
-      const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`;
-      window.open(url, '_blank');
-    });
-  </script>
+    </script>
 </body>
 </html>
