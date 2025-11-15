@@ -67,10 +67,6 @@
             }
         }
 
-        .brand-pink    { color: #EC4899; }
-        .brand-lilac   { color: #8B5CF6; }
-        .brand-bg-main { background-color: rgba(255,255,255,0.9); }
-
         .glossy-text {
             text-shadow: 0 0 4px rgba(255,255,255,0.9),
                          0 0 10px rgba(236,72,153,0.55),
@@ -362,6 +358,34 @@
             </div>
         </div>
     </footer>
+
+    <!-- MODAL ELEGANTE PARA NOTIFICACIONES -->
+    <div id="notification-modal"
+         class="fixed inset-0 bg-black/40 z-[100] flex items-center justify-center px-4 hidden">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 md:p-7 text-center relative">
+        <button id="notification-close"
+                class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-lg">
+          <i class="fas fa-times"></i>
+        </button>
+
+        <div
+          class="mx-auto mb-4 h-14 w-14 rounded-full bg-gradient-to-tr from-pink-400 via-fuchsia-400 to-amber-300 flex items-center justify-center shadow-md">
+          <i class="fas fa-check text-white text-2xl"></i>
+        </div>
+
+        <h3 class="text-lg md:text-xl font-bold text-pink-600 mb-2">
+          ¡Listo!
+        </h3>
+        <p id="notification-message" class="text-sm text-gray-700">
+          <!-- Aquí se inserta el texto desde JS -->
+        </p>
+
+        <button id="notification-ok"
+                class="mt-5 bg-pink-500 hover:bg-pink-600 text-white text-sm font-semibold py-2.5 px-8 rounded-full shadow-md">
+          Aceptar
+        </button>
+      </div>
+    </div>
     
     <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -429,9 +453,30 @@
         const shareLocationBtn  = document.getElementById('share-location-btn-checkout');
         const locationStatus    = document.getElementById('location-status-checkout');
 
+        const notificationModal   = document.getElementById('notification-modal');
+        const notificationMessage = document.getElementById('notification-message');
+        const notificationClose   = document.getElementById('notification-close');
+        const notificationOk      = document.getElementById('notification-ok');
+
         // Estado
         let cart = {};          // { id: { ...product, quantity } }
         let sharedLocation = null;
+
+        // --------- MODAL ELEGANTE ---------
+        function showNotification(msg) {
+            notificationMessage.textContent = msg;
+            notificationModal.classList.remove('hidden');
+        }
+
+        function hideNotification() {
+            notificationModal.classList.add('hidden');
+        }
+
+        notificationClose.addEventListener('click', hideNotification);
+        notificationOk.addEventListener('click', hideNotification);
+        notificationModal.addEventListener('click', (e) => {
+            if (e.target === notificationModal) hideNotification();
+        });
 
         // --------- RENDER PRODUCTOS ---------
         function renderProducts() {
@@ -539,7 +584,8 @@
                 const id = e.target.dataset.id;
                 const quantity = parseInt(card.querySelector('.quantity-value').textContent);
                 addToCart(id, quantity);
-                alert(`${quantity} "${products.find(p => p.id == id).name}" agregado(s) al carrito.`);
+                const productName = products.find(p => p.id == id).name;
+                showNotification(`${quantity} "${productName}" agregado(s) al carrito.`);
                 card.querySelector('.quantity-value').textContent = '1';
             }
         });
@@ -583,7 +629,7 @@
         orderForm.addEventListener('submit', (e) => {
             e.preventDefault();
             if (Object.keys(cart).length === 0) {
-                alert('Tu carrito está vacío. Agrega productos antes de enviar el pedido.');
+                showNotification('Tu carrito está vacío. Agrega productos antes de enviar el pedido.');
                 return;
             }
 
@@ -594,12 +640,12 @@
             const orderType = document.getElementById('orderType').value;
 
             if (!name || !phone) {
-                alert('Por favor, completa tu nombre y número de WhatsApp.');
+                showNotification('Por favor, completa tu nombre y número de WhatsApp.');
                 return;
             }
 
             if (orderType === 'domicilio' && !address) {
-                alert('Para entrega a domicilio, escribe tu dirección y referencia.');
+                showNotification('Para entrega a domicilio, escribe tu dirección y referencia.');
                 return;
             }
 
@@ -635,7 +681,7 @@
             const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
 
-            alert('Tu pedido se abrió en WhatsApp. Solo revisa y envíalo. 🩷');
+            showNotification('Tu pedido se abrió en WhatsApp. Solo revisa y envíalo. 🩷');
 
             // Reset
             cart = {};
