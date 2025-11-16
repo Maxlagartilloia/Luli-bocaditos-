@@ -43,7 +43,6 @@
             filter: drop-shadow(0 8px 12px rgba(0,0,0,0.15));
         }
 
-        /* Posiciones y tiempos distintos para cada figura */
         .dulce-float span:nth-child(1) { left: 5%;  animation-duration: 18s; animation-delay: 0s;  }
         .dulce-float span:nth-child(2) { left: 25%; animation-duration: 22s; animation-delay: 4s;  }
         .dulce-float span:nth-child(3) { left: 48%; animation-duration: 20s; animation-delay: 8s;  }
@@ -85,29 +84,24 @@
         <span>🍧</span>
     </div>
 
-    <!-- HEADER -->
+    <!-- HEADER SOLO CON LOGO + SECCIONES + CARRITO -->
     <header class="bg-white/95 backdrop-blur-md shadow-md sticky top-0 z-40">
-        <div class="max-w-6xl mx-auto px-4 md:px-6 py-2 flex justify-between items-center">
-            <a href="#" onclick="showPage('home')" class="flex items-center gap-3">
-    <!-- LOGO GRANDE ANTOJITOS LULI -->
-    <img src="https://i.postimg.cc/Z5WGhJk6/IMG_0161.png"
-         alt="Logo Antojitos Luli Gourmet"
-         class="h-16 md:h-20 w-auto drop-shadow-lg">
-</a>
-                        ANTOJITOS LULI
-                    </h1>
-                    <p class="text-xs md:text-sm text-gray-500">
-                        Mini donas · waffles · frappés · chamoyadas
-                    </p>
-                </div>
+        <div class="max-w-6xl mx-auto px-4 md:px-6 py-1 flex justify-between items-center">
+            <!-- LOGO GRANDE (DOBLE) -->
+            <a href="#" onclick="showPage('home')" class="flex items-center">
+                <img src="https://i.postimg.cc/Z5WGhJk6/IMG_0161.png"
+                     alt="Logo Antojitos Luli Gourmet"
+                     class="h-32 md:h-40 w-auto drop-shadow-lg">
             </a>
 
+            <!-- SECCIONES -->
             <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-600">
                 <a href="#productos" class="hover:text-pink-500 transition-colors">Menú</a>
                 <a href="#experiencia" class="hover:text-pink-500 transition-colors">Experiencia</a>
                 <a href="#footer-contact" class="hover:text-pink-500 transition-colors">Contacto</a>
             </nav>
 
+            <!-- BOTÓN CARRITO -->
             <button id="cart-button"
                     onclick="showPage('checkout')"
                     class="relative bg-pink-500 text-white px-4 py-2 rounded-full font-bold hover:bg-pink-600 transition-colors flex items-center gap-2 shadow-lg">
@@ -392,7 +386,7 @@
         // --------- CONFIG ---------
         const WHATSAPP_NUMBER = '593939347588'; // Luli
 
-        // Productos principales (puedes agregar más o editar precios/nombres)
+        // Productos principales
         const products = [
             // MINI DONAS
             { id: 1, name: 'Mini donitas clásicas x4', price: 1.00, 
