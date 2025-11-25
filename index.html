@@ -87,7 +87,7 @@
     <!-- HEADER SOLO CON LOGO + SECCIONES + CARRITO -->
     <header class="bg-white/95 backdrop-blur-md shadow-md sticky top-0 z-40">
         <div class="max-w-6xl mx-auto px-4 md:px-6 py-1 flex justify-between items-center">
-            <!-- LOGO GRANDE -->
+            <!-- LOGO -->
             <a href="#" onclick="showPage('home')" class="flex items-center">
                 <img src="https://i.postimg.cc/Z5WGhJk6/IMG_0161.png"
                      alt="Logo Antojitos Luli Gourmet"
@@ -130,7 +130,7 @@
                 </p>
                 <div class="flex flex-wrap justify-center gap-3 mb-6">
                     <div class="bg-white/90 rounded-full px-4 py-2 text-xs md:text-sm text-gray-700 shadow-sm">
-                        <i class="fas fa-star text-pink-500 mr-1"></i> Especialidad en mini donas y bolos de tres leches
+                        <i class="fas fa-star text-pink-500 mr-1"></i> Especialidad en mini donas y bolos tres leches
                     </div>
                     <div class="bg-white/90 rounded-full px-4 py-2 text-xs md:text-sm text-gray-700 shadow-sm">
                         <i class="fas fa-heart text-pink-500 mr-1"></i> Perfectos para tardes dulces y detallitos
@@ -156,11 +156,9 @@
                 <h2 class="text-3xl font-bold mb-8 text-center text-pink-600">
                     Menú Antojitos Luli
                 </h2>
-                <p class="text-center text-gray-700 mb-8 text-sm md:text-base">
-                    Elige tu producto, selecciona la <strong>presentación</strong> y escoge la
-                    <strong>jalea principal</strong>.  
-                    Si tu combo incluye varias jaleas y frutas, escríbelas en el detalle.  
-                    Al finalizar, podrás marcar si el pedido es para <strong>servirse en el local</strong> o para <strong>entrega a domicilio</strong>, con opción de compartir tu ubicación.
+                <p class="text-center text-gray-700 mb-8">
+                    Elige tus productos favoritos, ajusta la cantidad y agrégalos al carrito.  
+                    Al finalizar, podrás marcar si el pedido es para <strong>servirse en el local</strong> o para <strong>entrega a domicilio</strong>.
                 </p>
                 <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- JS inyecta las tarjetas aquí -->
@@ -257,10 +255,10 @@
                             </div>
                             <p id="location-status-checkout" class="text-xs text-center text-green-600 font-semibold mt-1"></p>
                             <div class="mb-2">
-                                <label for="extra" class="block text-gray-700 font-semibold mb-1 text-sm">Notas generales del pedido</label>
+                                <label for="extra" class="block text-gray-700 font-semibold mb-1 text-sm">Notas del pedido</label>
                                 <textarea id="extra" rows="2"
                                           class="w-full px-3 py-2 border rounded-lg text-sm"
-                                          placeholder="Ej: mesa 3, sin hielo, sorpresa de cumpleaños, etc."></textarea>
+                                          placeholder="Ej: mesa 3, sin crema, sin hielo, sorpresa de cumpleaños, etc."></textarea>
                             </div>
                         </form>
                     </div>
@@ -384,624 +382,512 @@
     </div>
     
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --------- CONFIG ---------
-        const WHATSAPP_NUMBER = '593939347588'; // Luli
+document.addEventListener('DOMContentLoaded', () => {
+    const WHATSAPP_NUMBER = '593939347588';
 
-        // Recargos por tipo de jalea.
-        // Ajusta estos valores si quieres cambiar el precio.
-        const jellyOptions = [
-            {
-                id: 'estandar',
-                name: 'Jalea estándar (chocolate, fresa, mora, arequipe, etc.)',
-                extra: 0.00
-            },
-            {
-                id: 'frutal-especial',
-                name: 'Jalea frutal especial (+$0.25)',
-                extra: 0.25
-            },
-            {
-                id: 'premium',
-                name: 'Jalea premium Nutella / Kinder / Ferrero (+$0.50)',
-                extra: 0.50
-            }
-        ];
+    // Imágenes locales (coloca estos archivos junto a index.html)
+    const IMG_DONAS_1   = 'luli-mini-donas-clasicas-1.jpg';
+    const IMG_DONAS_2   = 'luli-mini-donas-frutas-1.jpg';
+    const IMG_DONAS_3   = 'luli-mini-donas-mix-1.jpg';
 
-        // Imágenes base (puedes cambiarlas por las que quieras)
-        const IMG_DONAS_1   = 'https://i.postimg.cc/30gcj4K3/Whats-App-Image-2025-11-15-at-14-59-07-1.jpg';
-        const IMG_DONAS_2   = 'https://i.postimg.cc/BPWz1cG0/Whats-App-Image-2025-11-15-at-14-59-05-1.jpg';
-        const IMG_DONAS_3   = 'https://i.postimg.cc/MfkLjb8q/Whats-App-Image-2025-11-15-at-14-59-05-2.jpg';
-        const IMG_WAFFLES   = 'https://i.postimg.cc/K3nH7kZx/Whats-App-Image-2025-11-15-at-14-59-06.jpg';
-        const IMG_WAFFLES_2 = 'https://i.postimg.cc/T58sWqXT/Whats-App-Image-2025-11-15-at-14-59-06-1.jpg';
-        const IMG_WAFFLES_3 = 'https://i.postimg.cc/bSQB0Dq7/Whats-App-Image-2025-11-15-at-14-59-06-2.jpg';
-        const IMG_FRAPPE    = 'https://i.postimg.cc/MfyF0MWV/Whats-App-Image-2025-11-15-at-14-59-08.jpg';
-        const IMG_CHAMOY    = 'https://i.postimg.cc/tnhMdZXx/Whats-App-Image-2025-11-15-at-14-59-08-2.jpg';
-        const IMG_MICHE     = 'https://i.postimg.cc/6TRgxSCY/Whats-App-Image-2025-11-15-at-14-59-09.jpg';
-        const IMG_BOLOS     = 'https://i.postimg.cc/0KpBGM86/Whats-App-Image-2025-11-15-at-14-59-08-1.jpg';
-        const IMG_FRUTAS    = 'https://i.postimg.cc/8f8YrBg9/Whats-App-Image-2025-11-15-at-14-59-11.jpg';
-        const IMG_DETALLE   = 'https://i.postimg.cc/Rqfyx8wg/Whats-App-Image-2025-11-15-at-14-59-09-1.jpg';
+    const IMG_WAFFLES   = 'luli-waffles-toppings-1.jpg';
+    const IMG_WAFFLES_2 = 'luli-waffles-frutas-1.jpg';
+    const IMG_WAFFLES_3 = 'luli-waffles-mix-1.jpg';
 
-        // --------- PRODUCTOS (precios sacados del PDF) ---------
-        const products = [
-            // MINI DONAS
-            {
-                id: 'mini-clasicas',
-                name: 'Mini Donas Clásicas',
-                category: 'Mini Donas',
-                img: IMG_DONAS_1,
-                desc: 'Cajitas de mini donas con toppings y jaleas a elección.',
-                customizable: true, // permite toppings/jaleas/frutas + selección de jalea principal
-                options: [
-                    { label: '4 mini donas',  detail: '1 topping + 1 jalea',             price: 1.25 },
-                    { label: '8 mini donas',  detail: '2 toppings + 2 jaleas',           price: 2.25 },
-                    { label: '12 mini donas', detail: '3 toppings + 3 jaleas',           price: 3.25 },
-                    { label: '16 mini donas', detail: '4 toppings + 4 jaleas',           price: 4.25 },
-                    { label: '20 mini donas', detail: '5 toppings + 5 jaleas',           price: 6.25 },
-                    { label: '24 mini donas', detail: '6 toppings + 6 jaleas',           price: 7.25 },
-                ]
-            },
-            {
-                id: 'mini-frutas',
-                name: 'Mini Donas con Frutas',
-                category: 'Mini Donas',
-                img: IMG_DONAS_2,
-                desc: 'Mini donas con frutas frescas, perfectas para algo más frutal.',
-                customizable: true,
-                options: [
-                    { label: '4 mini donas',  detail: 'Incluye 1 fruta',                 price: 1.50 },
-                    { label: '8 mini donas',  detail: 'Incluye 2 frutas',                price: 2.50 },
-                    { label: '12 mini donas', detail: 'Incluye 3 frutas',                price: 3.50 },
-                    { label: '16 mini donas', detail: 'Incluye 4 frutas',                price: 4.50 },
-                    { label: '20 mini donas', detail: 'Incluye 5 frutas',                price: 6.50 },
-                    { label: '24 mini donas', detail: 'Incluye 6 frutas',                price: 7.50 },
-                ]
-            },
-            {
-                id: 'mini-mix',
-                name: 'Mini Donas Mix (topping + fruta)',
-                category: 'Mini Donas',
-                img: IMG_DONAS_3,
-                desc: 'Combinación de toppings, jaleas y frutas en una sola cajita.',
-                customizable: true,
-                options: [
-                    { label: '8 mini donas',  detail: '1 topping + 1 jalea + fruta',     price: 2.75 },
-                    { label: '12 mini donas', detail: '2 toppings + 2 jaleas + fruta',   price: 3.75 },
-                    { label: '16 mini donas', detail: '3 toppings + 3 jaleas + fruta',   price: 4.75 },
-                    { label: '20 mini donas', detail: '4 toppings + 4 jaleas + fruta',   price: 6.75 },
-                    { label: '24 mini donas', detail: '5 toppings + 5 jaleas + fruta',   price: 7.75 },
-                ]
-            },
+    const IMG_FRAPPE    = 'luli-frappes-1.jpg';
+    const IMG_CHAMOY    = 'luli-chamoyadas-1.jpg';
+    const IMG_MICHE     = 'luli-micheladas-1.jpg';
 
-            // WAFFLES
-            {
-                id: 'waffle-toppings',
-                name: 'Waffles con Toppings y Jaleas',
-                category: 'Waffles',
-                img: IMG_WAFFLES,
-                desc: 'Waffles con toppings dulces y jaleas para personalizar.',
-                customizable: true,
-                options: [
-                    { label: 'Waffle Sencillo', detail: '1 topping + 1 jalea',            price: 2.25 },
-                    { label: 'Waffle Doble',    detail: '2 toppings + 2 jaleas',          price: 3.25 },
-                    { label: 'Waffle LiLu',     detail: '3 toppings + 2 jaleas',          price: 4.25 },
-                ]
-            },
-            {
-                id: 'waffle-frutas',
-                name: 'Waffles con Frutas y Jaleas',
-                category: 'Waffles',
-                img: IMG_WAFFLES_2,
-                desc: 'Waffles con frutas frescas y jaleas.',
-                customizable: true,
-                options: [
-                    { label: 'Presentación 1', detail: '1 fruta + 1 jalea',               price: 2.50 },
-                    { label: 'Presentación 2', detail: '2 frutas + 1 jalea',              price: 3.50 },
-                    { label: 'Presentación 3', detail: '3 frutas + 1 jalea',              price: 4.50 },
-                ]
-            },
-            {
-                id: 'waffle-mix',
-                name: 'Waffles Mixtos',
-                category: 'Waffles',
-                img: IMG_WAFFLES_3,
-                desc: 'Frutas + toppings + jaleas, todo en un solo waffle.',
-                customizable: true,
-                options: [
-                    { label: 'Waffle Mini',  detail: '1 fruta + 1 topping + 1 jalea',      price: 3.75 },
-                    { label: 'Waffle Deli',  detail: '2 frutas + 2 toppings + 2 jaleas',   price: 4.75 },
-                    { label: 'Waffle Full',  detail: '3 frutas + 3 toppings + 2 jaleas',   price: 5.75 },
-                ]
-            },
+    const IMG_BOLOS     = 'luli-bolos-1.jpg';
+    const IMG_FRUTAS    = 'luli-frutas-crema-1.jpg';
+    const IMG_DETALLE   = 'luli-detallitos-1.jpg';
 
-            // FRAPPÉS (precios individuales)
-            { id: 'frappe-cafe',     name: 'Frappé de Café',              category: 'Frappés', img: IMG_FRAPPE, desc: 'Café frío cremoso estilo Luli.',          price: 2.75 },
-            { id: 'frappe-chicle',   name: 'Frappé de Chicle',            category: 'Frappés', img: IMG_FRAPPE, desc: 'Dulce sabor a chicle azul.',               price: 3.25 },
-            { id: 'frappe-chocolate',name: 'Frappé de Chocolate',         category: 'Frappés', img: IMG_FRAPPE, desc: 'Chocolate frío y cremoso.',               price: 3.75 },
-            { id: 'frappe-oreo',     name: 'Frappé de Oreo',              category: 'Frappés', img: IMG_FRAPPE, desc: 'Con galletas Oreo trituradas.',           price: 3.75 },
-            { id: 'frappe-fresa',    name: 'Frappé de Fresa',             category: 'Frappés', img: IMG_FRAPPE, desc: 'Fresa cremosa y refrescante.',            price: 3.50 },
-            { id: 'frappe-tango',    name: 'Frappé de Galleta Tango',     category: 'Frappés', img: IMG_FRAPPE, desc: 'Con galleta Tango.',                      price: 3.75 },
-            { id: 'frappe-pay-mara', name: 'Frappé de Pay de Maracuyá',   category: 'Frappés', img: IMG_FRAPPE, desc: 'Inspirado en pay de maracuyá.',           price: 4.25 },
-            { id: 'frappe-pay-fresa',name: 'Frappé de Pay de Fresa',      category: 'Frappés', img: IMG_FRAPPE, desc: 'Inspirado en pay de fresa.',              price: 4.25 },
+    // Recargos
+    const EXTRA_TOPPING = 0.25;
+    const EXTRA_JALEA_PREMIUM = 0.50;
 
-            // CHAMOYADAS
-            { id: 'chamoy-fresa',    name: 'Chamoyada de Fresa',          category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Dulce, ácida y picosita.',             price: 3.25 },
-            { id: 'chamoy-mango',    name: 'Chamoyada de Mango',          category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Mango con chamoy y tajín.',            price: 3.50 },
-            { id: 'chamoy-pina',     name: 'Chamoyada de Piña',           category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Piña fresca con chamoy.',              price: 3.25 },
-            { id: 'chamoy-mara',     name: 'Chamoyada de Maracuyá',       category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Maracuyá con toque picantito.',        price: 3.25 },
-            { id: 'chamoy-mixta',    name: 'Chamoyada Mixta (fresa+mango)',category:'Chamoyadas',img: IMG_CHAMOY, desc:'Mezcla frutal con chamoy.',              price: 3.75 },
-            { id: 'chamoy-botana',   name: 'Chamoyada con Botana',        category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Incluye botana y toppings.',           price: 4.75 },
-
-            // MICHELADAS FRUTALES
-            { id: 'miche-corona',    name: 'Michelada Frutal Corona',     category: 'Micheladas', img: IMG_MICHE, desc: 'Corona con mezcla frutal.',            price: 4.75 },
-            { id: 'miche-club',      name: 'Michelada Frutal Club Verde', category: 'Micheladas', img: IMG_MICHE, desc: 'Club Verde con frutas y chamoy.',       price: 4.25 },
-            { id: 'miche-negra',     name: 'Michelada Frutal Pilsener Negra',category:'Micheladas',img: IMG_MICHE,desc:'Pilsener Negra con twist frutal.',       price: 3.75 },
-            {
-                id: 'miche-botanera',
-                name: 'La Botanera',
-                category: 'Micheladas',
-                img: IMG_MICHE,
-                desc: 'Cerveza, manzana verde, pepino, mango, mortadela, sabritas, chamoy, tajín y gomitas.',
-                price: 5.00
-            },
-            {
-                id: 'miche-jarra',
-                name: 'Jarra Chela',
-                category: 'Micheladas',
-                img: IMG_MICHE,
-                desc: 'Jarra frutal y refrescante para compartir.',
-                price: 8.50
-            },
-
-            // OTROS PRODUCTOS
-            {
-                id: 'bolos-tres-leches',
-                name: 'Bolo Tres Leches (unidad)',
-                category: 'Postres fríos',
-                img: IMG_BOLOS,
-                desc: 'Bolo frío a base de tres leches, ideal para detalle dulce.',
-                price: 0.50
-            },
-            {
-                id: 'frutas-crema',
-                name: 'Fresas / Frutas con crema',
-                category: 'Postres fríos',
-                img: IMG_FRUTAS,
-                desc: 'Copas frías de fresas o frutas mixtas con crema.',
-                price: 3.50
-            },
-            {
-                id: 'detallito-dulce',
-                name: 'Detallito dulce especial',
-                category: 'Detalles especiales',
-                img: IMG_DETALLE,
-                desc: 'Arreglo dulce para cumpleaños, aniversarios y ocasiones especiales.',
-                price: 10.00
-            },
-        ];
-
-        // --------- DOM ---------
-        const productList       = document.getElementById('product-list');
-        const cartCountEl       = document.getElementById('cart-count');
-        const orderForm         = document.getElementById('order-form');
-        const checkoutSummary   = document.getElementById('checkout-summary');
-        const clearCartBtn      = document.getElementById('clear-cart-btn');
-        const cartEmptyMessage  = document.getElementById('cart-empty-message');
-        const cartContent       = document.getElementById('cart-content');
-        const shareLocationBtn  = document.getElementById('share-location-btn-checkout');
-        const locationStatus    = document.getElementById('location-status-checkout');
-
-        const notificationModal   = document.getElementById('notification-modal');
-        const notificationMessage = document.getElementById('notification-message');
-        const notificationClose   = document.getElementById('notification-close');
-        const notificationOk      = document.getElementById('notification-ok');
-
-        // Estado
-        let cart = {};          // key: item
-        let sharedLocation = null;
-
-        // --------- MODAL ELEGANTE ---------
-        function showNotification(msg) {
-            notificationMessage.textContent = msg;
-            notificationModal.classList.remove('hidden');
+    // Tipos de jalea (según PDF + jaleas premium)
+    const jellyOptions = [
+        {
+            id: 'estandar',
+            name: 'Jalea estándar (chocolate, fresa, mora, caramelo, etc.) - sin recargo',
+            extra: 0
+        },
+        {
+            id: 'premium',
+            name: 'Jalea premium Nutella / Kinder / Ferrero (+$0.50)',
+            extra: EXTRA_JALEA_PREMIUM
         }
+    ];
 
-        function hideNotification() {
-            notificationModal.classList.add('hidden');
-        }
+    // PRODUCTOS BASADOS EN EL PDF
+    const products = [
+      {
+        id: 'mini-clasicas',
+        name: 'Mini Donas Clásicas (toppings + jaleas)',
+        category: 'Mini Donas',
+        img: IMG_DONAS_1,
+        desc: 'Cajitas de mini donas clásicas con toppings y jaleas a elección.',
+        customizable: true,
+        options: [
+          { label: '4 mini donas',  detail: '1 topping + 1 jalea',  price: 1.25 },
+          { label: '8 mini donas',  detail: '2 toppings + 2 jaleas', price: 2.25 },
+          { label: '12 mini donas', detail: '3 toppings + 3 jaleas', price: 3.25 },
+          { label: '16 mini donas', detail: '4 toppings + 4 jaleas', price: 4.25 },
+          { label: '20 mini donas', detail: '5 toppings + 5 jaleas', price: 6.25 },
+          { label: '24 mini donas', detail: '6 toppings + 6 jaleas', price: 7.25 }
+        ]
+      },
+      {
+        id: 'mini-frutas-solo',
+        name: 'Mini Donas con frutas',
+        category: 'Mini Donas',
+        img: IMG_DONAS_2,
+        desc: 'Mini donas con frutas frescas, sin toppings.',
+        customizable: true,
+        options: [
+          { label: '4 mini donas',  detail: 'Incluye 1 fruta', price: 1.50 },
+          { label: '8 mini donas',  detail: 'Incluye 2 frutas', price: 2.50 },
+          { label: '12 mini donas', detail: 'Incluye 3 frutas', price: 3.50 },
+          { label: '16 mini donas', detail: 'Incluye 4 frutas', price: 4.50 },
+          { label: '20 mini donas', detail: 'Incluye 5 frutas', price: 6.50 },
+          { label: '24 mini donas', detail: 'Incluye 6 frutas', price: 7.50 }
+        ]
+      },
+      {
+        id: 'mini-mix',
+        name: 'Mini Donas Mix (topping + jaleas + fruta)',
+        category: 'Mini Donas',
+        img: IMG_DONAS_3,
+        desc: 'Combinación de toppings, jaleas y fruta en una sola cajita.',
+        customizable: true,
+        options: [
+          { label: '8 mini donas',  detail: '1 topping + 1 jalea + fruta', price: 2.75 },
+          { label: '12 mini donas', detail: '2 toppings + 2 jaleas + fruta', price: 3.75 },
+          { label: '16 mini donas', detail: '3 toppings + 3 jaleas + fruta', price: 4.75 },
+          { label: '20 mini donas', detail: '4 toppings + 4 jaleas + fruta', price: 6.75 },
+          { label: '24 mini donas', detail: '5 toppings + 5 jaleas + fruta', price: 7.75 }
+        ]
+      },
+      {
+        id: 'waffle-toppings',
+        name: 'Waffles con toppings y jaleas',
+        category: 'Waffles',
+        img: IMG_WAFFLES,
+        desc: 'Waffles con toppings dulces y jaleas para personalizar.',
+        customizable: true,
+        options: [
+          { label: 'Waffle sencillo', detail: '1 topping + 1 jalea', price: 2.25 },
+          { label: 'Waffle doble',    detail: '2 toppings + 2 jaleas', price: 3.25 },
+          { label: 'Waffle LiLu',     detail: '3 toppings + 2 jaleas', price: 4.25 }
+        ]
+      },
+      {
+        id: 'waffle-frutas',
+        name: 'Waffles con frutas y jaleas',
+        category: 'Waffles',
+        img: IMG_WAFFLES_2,
+        desc: 'Waffles con frutas frescas y jaleas.',
+        customizable: true,
+        options: [
+          { label: 'Waffle + 1 fruta', detail: '1 fruta + 1 jalea', price: 2.50 },
+          { label: 'Waffle + 2 frutas', detail: '2 frutas + 1 jalea', price: 3.50 },
+          { label: 'Waffle + 3 frutas', detail: '3 frutas + 1 jalea', price: 4.50 }
+        ]
+      },
+      {
+        id: 'waffle-mix',
+        name: 'Waffles mixtos (frutas + toppings + jaleas)',
+        category: 'Waffles',
+        img: IMG_WAFFLES_3,
+        desc: 'Frutas + toppings + jaleas en un solo waffle.',
+        customizable: true,
+        options: [
+          { label: 'Waffle Mini', detail: '1 fruta + 1 topping + 1 jalea', price: 3.75 },
+          { label: 'Waffle Deli', detail: '2 frutas + 2 toppings + 2 jaleas', price: 4.75 },
+          { label: 'Waffle Full', detail: '3 frutas + 3 toppings + 2 jaleas', price: 5.75 }
+        ]
+      },
+      // FRAPPÉS
+      { id: 'frappe-cafe', name: 'Frappé de café', category: 'Frappés', img: IMG_FRAPPE, desc: 'Café frío cremoso estilo Luli.', price: 2.75 },
+      { id: 'frappe-chicle', name: 'Frappé de chicle', category: 'Frappés', img: IMG_FRAPPE, desc: 'Dulce sabor a chicle azul.', price: 3.25 },
+      { id: 'frappe-chocolate', name: 'Frappé de chocolate', category: 'Frappés', img: IMG_FRAPPE, desc: 'Chocolate frío y cremoso.', price: 3.75 },
+      { id: 'frappe-oreo', name: 'Frappé de Oreo', category: 'Frappés', img: IMG_FRAPPE, desc: 'Con galletas Oreo trituradas.', price: 3.75 },
+      { id: 'frappe-fresa', name: 'Frappé de fresa', category: 'Frappés', img: IMG_FRAPPE, desc: 'Fresa cremosa y refrescante.', price: 3.50 },
+      { id: 'frappe-tango', name: 'Frappé de galleta Tango', category: 'Frappés', img: IMG_FRAPPE, desc: 'Con galleta Tango.', price: 3.75 },
+      { id: 'frappe-pay-mara', name: 'Frappé de pay de maracuyá', category: 'Frappés', img: IMG_FRAPPE, desc: 'Inspirado en pay de maracuyá.', price: 4.25 },
+      { id: 'frappe-pay-fresa', name: 'Frappé de pay de fresa', category: 'Frappés', img: IMG_FRAPPE, desc: 'Inspirado en pay de fresa.', price: 4.25 },
+      // CHAMOYADAS
+      { id: 'chamoy-fresa', name: 'Chamoyada de fresa', category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Dulce, ácida y picosita.', price: 3.25 },
+      { id: 'chamoy-mango', name: 'Chamoyada de mango', category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Mango con chamoy y tajín.', price: 3.50 },
+      { id: 'chamoy-pina', name: 'Chamoyada de piña', category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Piña fresca con chamoy.', price: 3.25 },
+      { id: 'chamoy-mara', name: 'Chamoyada de maracuyá', category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Maracuyá con toque picantito.', price: 3.25 },
+      { id: 'chamoy-mixta', name: 'Chamoyada mixta (fresa + mango)', category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Mezcla frutal con chamoy.', price: 3.75 },
+      { id: 'chamoy-botana', name: 'Chamoyada con botana', category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Incluye botana y toppings.', price: 4.75 },
+      // MICHELADAS
+      { id: 'miche-corona', name: 'Michelada frutal Corona', category: 'Micheladas', img: IMG_MICHE, desc: 'Corona con mezcla frutal.', price: 4.75 },
+      { id: 'miche-club', name: 'Michelada frutal Club Verde', category: 'Micheladas', img: IMG_MICHE, desc: 'Club Verde con frutas y chamoy.', price: 4.25 },
+      { id: 'miche-negra', name: 'Michelada frutal Pilsener Negra', category: 'Micheladas', img: IMG_MICHE, desc: 'Pilsener Negra con twist frutal.', price: 3.75 },
+      { id: 'miche-botanera', name: 'La Botanera', category: 'Micheladas', img: IMG_MICHE, desc: 'Cerveza, frutas, botanas, gomitas y chamoy.', price: 5.00 },
+      { id: 'miche-jarra', name: 'Jarra Chela', category: 'Micheladas', img: IMG_MICHE, desc: 'Jarra frutal y refrescante para compartir.', price: 8.50 },
+      // OTROS POSTRES
+      { id: 'bolos-tres-leches', name: 'Bolo tres leches (unidad)', category: 'Postres fríos', img: IMG_BOLOS, desc: 'Bolo frío a base de tres leches, ideal para detalle dulce.', price: 0.50 },
+      { id: 'frutas-crema', name: 'Fresas / frutas con crema', category: 'Postres fríos', img: IMG_FRUTAS, desc: 'Copas frías de fresas o frutas mixtas con crema.', price: 3.50 },
+      { id: 'detallito-dulce', name: 'Detallito dulce especial', category: 'Detalles especiales', img: IMG_DETALLE, desc: 'Arreglo dulce para cumpleaños, aniversarios y ocasiones especiales.', price: 10.00 }
+    ];
 
-        notificationClose.addEventListener('click', hideNotification);
-        notificationOk.addEventListener('click', hideNotification);
-        notificationModal.addEventListener('click', (e) => {
-            if (e.target === notificationModal) hideNotification();
-        });
+    const productList       = document.getElementById('product-list');
+    const cartCountEl       = document.getElementById('cart-count');
+    const orderForm         = document.getElementById('order-form');
+    const checkoutSummary   = document.getElementById('checkout-summary');
+    const clearCartBtn      = document.getElementById('clear-cart-btn');
+    const cartEmptyMessage  = document.getElementById('cart-empty-message');
+    const cartContent       = document.getElementById('cart-content');
+    const shareLocationBtn  = document.getElementById('share-location-btn-checkout');
+    const locationStatus    = document.getElementById('location-status-checkout');
 
-        // --------- FUNCIONES AUXILIARES ---------
-        function computePrice(product, optionIndex, jellyIndex) {
-            const hasOptions = Array.isArray(product.options) && product.options.length > 0;
-            const base = hasOptions ? product.options[optionIndex].price : product.price;
-            const jelly = (typeof jellyIndex === 'number' && jellyOptions[jellyIndex]) ? jellyOptions[jellyIndex].extra : 0;
-            return base + jelly;
-        }
+    const notificationModal   = document.getElementById('notification-modal');
+    const notificationMessage = document.getElementById('notification-message');
+    const notificationClose   = document.getElementById('notification-close');
+    const notificationOk      = document.getElementById('notification-ok');
 
-        // --------- RENDER PRODUCTOS ---------
-        function renderProducts() {
-            productList.innerHTML = '';
-            products.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card bg-white/95 rounded-2xl text-center overflow-hidden flex flex-col shadow-md hover:shadow-xl transition-all duration-200 hover:-translate-y-1';
-                card.dataset.productId = product.id;
+    let cart = {};
+    let sharedLocation = null;
 
-                const hasOptions = Array.isArray(product.options) && product.options.length > 0;
-                const hasJelly = !!product.customizable; // mini donas y waffles
+    function showNotification(msg) {
+        notificationMessage.textContent = msg;
+        notificationModal.classList.remove('hidden');
+    }
 
-                const optionIndexDefault = 0;
-                const jellyIndexDefault = 0;
+    function hideNotification() {
+        notificationModal.classList.add('hidden');
+    }
 
-                const basePrice = computePrice(
-                    product,
-                    hasOptions ? optionIndexDefault : null,
-                    hasJelly ? jellyIndexDefault : null
-                );
+    notificationClose.addEventListener('click', hideNotification);
+    notificationOk.addEventListener('click', hideNotification);
+    notificationModal.addEventListener('click', (e) => {
+        if (e.target === notificationModal) hideNotification();
+    });
 
-                const firstDetail = hasOptions ? product.options[0].detail : '';
+    // Render de tarjetas de productos
+    function renderProducts() {
+        productList.innerHTML = '';
+        products.forEach((product, index) => {
+            const card = document.createElement('div');
+            card.className = 'bg-white/95 rounded-2xl text-center overflow-hidden flex flex-col shadow-md hover:shadow-xl transition-all duration-200 hover:-translate-y-1';
 
-                let optionsHtml = '';
-                if (hasOptions) {
-                    optionsHtml = `
-                        <label class="block text-[11px] text-gray-600 mb-1 text-left">Presentación</label>
-                        <select class="option-size w-full border rounded-lg text-xs py-2 px-2 mb-1">
-                            ${product.options.map((opt, idx) => `
-                                <option value="${idx}">
-                                    ${opt.label} - $${opt.price.toFixed(2)}
-                                </option>
-                            `).join('')}
+            let imgSrc = product.img || '';
+            let priceText = product.price ? '$' + product.price.toFixed(2) : '';
+            let optionsHTML = '';
+            let jellySelectHTML = '';
+
+            if (product.customizable && product.options && product.options.length) {
+                priceText = '$' + product.options[0].price.toFixed(2);
+
+                optionsHTML = `
+                    <div class="mb-3">
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Elige tamaño / combo</label>
+                        <select class="w-full border rounded-lg px-2 py-1 text-xs combo-select">
+                            ${product.options.map((opt, i) => `
+                                <option value="${i}">${opt.label} - $${opt.price.toFixed(2)} (${opt.detail})</option>`).join('')}
                         </select>
-                    `;
-                }
-
-                let jellyHtml = '';
-                if (hasJelly) {
-                    jellyHtml = `
-                        <label class="block text-[11px] text-gray-600 mb-1 text-left mt-1">
-                            Jalea principal
-                        </label>
-                        <select class="jelly-select w-full border rounded-lg text-xs py-2 px-2 mb-1">
-                            ${jellyOptions.map((j, idx) => `
-                                <option value="${idx}">
-                                    ${j.name}
-                                </option>
-                            `).join('')}
-                        </select>
-                    `;
-                }
-
-                let notesHtml = '';
-                if (product.customizable) {
-                    notesHtml = `
-                        <label class="block text-[11px] text-gray-600 mb-1 text-left mt-1">
-                            Toppings, jaleas y frutas (detalle)
-                        </label>
-                        <textarea
-                            class="item-notes w-full border rounded-lg text-xs p-2 mb-2"
-                            rows="2"
-                            placeholder="Ej: Nutella + chispas; jaleas de fresa y chocolate; frutas: fresa y banano. Respeta la cantidad incluida en el combo."></textarea>
-                    `;
-                }
-
-                card.innerHTML = `
-                    <div class="bg-pink-50/70">
-                        <img src="${product.img}" alt="${product.name}"
-                             class="w-full h-52 object-cover"
-                             onerror="this.onerror=null;this.src='https://placehold.co/400x220/FFE4F3/9D174D?text=${encodeURIComponent(product.name)}';">
-                    </div>
-                    <div class="p-4 flex flex-col flex-1">
-                        <h3 class="text-lg font-bold mb-1 text-pink-600">${product.name}</h3>
-                        <p class="text-xs text-gray-600 flex-1 mb-2">${product.desc}</p>
-                        <p class="font-bold text-lg text-pink-500 mb-1">
-                            $<span class="product-price">${basePrice.toFixed(2)}</span>
-                        </p>
-                        ${hasOptions ? `<p class="option-detail text-[11px] text-gray-500 mb-2">Incluye: ${firstDetail}</p>` : ''}
-                        ${optionsHtml}
-                        ${jellyHtml}
-                        ${notesHtml}
-                        <div class="flex items-center justify-center space-x-4 my-2">
-                            <button class="quantity-btn minus-btn bg-gray-200 rounded-full w-8 h-8 text-lg font-bold text-gray-700">-</button>
-                            <span class="quantity-value text-lg font-bold">1</span>
-                            <button class="quantity-btn plus-btn bg-gray-200 rounded-full w-8 h-8 text-lg font-bold text-gray-700">+</button>
-                        </div>
-                        <button class="add-to-cart-btn bg-pink-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-pink-600 transition-colors text-sm mt-2"
-                                data-id="${product.id}">
-                            Añadir al carrito
-                        </button>
                     </div>
                 `;
-                productList.appendChild(card);
-            });
-        }
 
-        // --------- CARRITO ---------
-        function addToCart(itemData) {
-            const { product, quantity, optionIndex, jellyIndex, notes } = itemData;
-            const hasOptions = Array.isArray(product.options) && product.options.length > 0;
-            const hasJelly = typeof jellyIndex === 'number' && jellyOptions[jellyIndex];
-
-            const optionObj = hasOptions ? product.options[optionIndex] : null;
-            const jellyObj  = hasJelly ? jellyOptions[jellyIndex] : null;
-
-            let displayName = product.name;
-            if (optionObj) displayName += ` - ${optionObj.label}`;
-
-            const price = computePrice(product, hasOptions ? optionIndex : null, hasJelly ? jellyIndex : null);
-
-            // Key única por producto + presentación + jalea
-            const key = `${product.id}${hasOptions ? '-' + optionIndex : ''}${hasJelly ? '-j' + jellyIndex : ''}`;
-
-            if (cart[key]) {
-                cart[key].quantity += quantity;
-                if (notes) {
-                    cart[key].notes = cart[key].notes
-                        ? cart[key].notes + '; ' + notes
-                        : notes;
-                }
-            } else {
-                cart[key] = {
-                    key,
-                    productId: product.id,
-                    baseName: product.name,
-                    name: displayName,
-                    price,
-                    quantity,
-                    notes: notes,
-                    option: optionObj,
-                    jelly: jellyObj
-                };
-            }
-
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const totalItems = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
-            cartCountEl.textContent = totalItems;
-            updateCheckoutPage();
-        }
-        
-        function updateCheckoutPage() {
-            if (document.getElementById('checkout-page').classList.contains('hidden')) return;
-
-            let subtotal = 0;
-            let html = '';
-
-            if (Object.keys(cart).length === 0) {
-                cartEmptyMessage.classList.remove('hidden');
-                cartContent.classList.add('hidden');
-                checkoutSummary.innerHTML = '';
-                return;
-            }
-
-            cartEmptyMessage.classList.add('hidden');
-            cartContent.classList.remove('hidden');
-
-            for (const key in cart) {
-                const item = cart[key];
-                subtotal += item.price * item.quantity;
-                html += `
-                    <div class="py-2 border-b last:border-b-0 flex justify-between items-start text-sm">
-                        <div>
-                            <p class="font-semibold">${item.quantity} x ${item.name}</p>
-                            ${item.jelly ? `<p class="text-xs text-pink-600">Jalea: ${item.jelly.name}</p>` : ''}
-                            ${item.notes ? `<p class="text-xs text-gray-500">Det.: ${item.notes}</p>` : ''}
+                if (product.category === 'Mini Donas' || product.category === 'Waffles') {
+                    jellySelectHTML = `
+                        <div class="mb-3">
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Tipo de jalea principal</label>
+                            <select class="w-full border rounded-lg px-2 py-1 text-xs jelly-select">
+                                ${jellyOptions.map(j => `
+                                    <option value="${j.id}">${j.name}</option>`).join('')}
+                            </select>
+                            <p class="text-[10px] text-gray-500 mt-1">
+                                Jalea premium Nutella / Kinder / Ferrero tiene recargo de $${EXTRA_JALEA_PREMIUM.toFixed(2)}.
+                                Topping extra: $${EXTRA_TOPPING.toFixed(2)}.
+                            </p>
                         </div>
-                        <span class="font-semibold">$${(item.price * item.quantity).toFixed(2)}</span>
-                    </div>
-                `;
+                    `;
+                }
             }
 
-            html += `
-                <div class="mt-4 border-t pt-3 space-y-1 text-sm">
-                    <div class="flex justify-between"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
-                    <div class="flex justify-between font-bold text-lg text-pink-600">
-                        <span>Total</span><span>$${subtotal.toFixed(2)}</span>
+            card.innerHTML = `
+                <div class="bg-pink-50/70">
+                    <img src="${imgSrc}" alt="${product.name}"
+                        class="w-full h-52 object-cover"
+                        onerror="this.onerror=null;this.src='https://placehold.co/400x220/FFE4F3/9D174D?text=${encodeURIComponent(product.name)}';">
+                </div>
+                <div class="p-4 flex flex-col flex-1">
+                    <h3 class="text-lg font-bold mb-1 text-pink-600">${product.name}</h3>
+                    <p class="text-xs text-gray-600 flex-1 mb-2">${product.desc}</p>
+                    <p class="font-bold text-lg text-pink-500 mb-2 main-price">${priceText}</p>
+                    ${optionsHTML}
+                    ${jellySelectHTML}
+                    <div class="mb-3">
+                        <label class="block text-[11px] font-semibold text-gray-700 mb-1">Sabores / Toppings / Detalles</label>
+                        <textarea class="w-full border rounded-lg px-2 py-1 text-[11px] notes-input" rows="2"
+                            placeholder="Ej: 2 de chicle con oreo, 2 de chocolate; jaleas de fresa y mora; fruta: fresa y mango."></textarea>
                     </div>
-                    <p class="text-xs text-gray-500 mt-1">El valor final puede variar ligeramente según sabores y extras especiales.</p>
+                    <div class="flex items-center justify-center space-x-4 my-2">
+                        <button class="quantity-btn minus-btn bg-gray-200 rounded-full w-8 h-8 text-lg font-bold text-gray-700">-</button>
+                        <span class="quantity-value text-lg font-bold">1</span>
+                        <button class="quantity-btn plus-btn bg-gray-200 rounded-full w-8 h-8 text-lg font-bold text-gray-700">+</button>
+                    </div>
+                    <button class="add-to-cart-btn bg-pink-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-pink-600 transition-colors text-sm mt-2"
+                            data-index="${index}">
+                        Añadir al carrito
+                    </button>
                 </div>
             `;
-            checkoutSummary.innerHTML = html;
+            productList.appendChild(card);
+        });
+    }
+
+    function addToCart(itemKey, itemData) {
+        if (cart[itemKey]) {
+            cart[itemKey].quantity += itemData.quantity;
+        } else {
+            cart[itemKey] = itemData;
+        }
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        const totalItems = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
+        cartCountEl.textContent = totalItems;
+        updateCheckoutPage();
+    }
+
+    function updateCheckoutPage() {
+        const checkoutPage = document.getElementById('checkout-page');
+        if (checkoutPage.classList.contains('hidden')) return;
+
+        let subtotal = 0;
+        let html = '';
+
+        if (Object.keys(cart).length === 0) {
+            cartEmptyMessage.classList.remove('hidden');
+            cartContent.classList.add('hidden');
+            checkoutSummary.innerHTML = '';
+            return;
         }
 
-        // --------- EVENTOS PRODUCTOS ---------
-        productList.addEventListener('click', (e) => {
-            const card = e.target.closest('.product-card');
-            if (!card) return;
+        cartEmptyMessage.classList.add('hidden');
+        cartContent.classList.remove('hidden');
 
-            if (e.target.classList.contains('quantity-btn')) {
-                const valueSpan = card.querySelector('.quantity-value');
-                let currentValue = parseInt(valueSpan.textContent);
-                if (e.target.classList.contains('plus-btn')) currentValue++;
-                else if (e.target.classList.contains('minus-btn') && currentValue > 1) currentValue--;
-                valueSpan.textContent = currentValue;
+        for (const key in cart) {
+            const item = cart[key];
+            const lineTotal = item.price * item.quantity;
+            subtotal += lineTotal;
+            html += `
+                <div class="py-2 border-b last:border-b-0 text-sm">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="font-semibold">${item.quantity} x ${item.name}</p>
+                            <p class="text-[11px] text-gray-500">${item.detail}</p>
+                            ${item.notes ? `<p class="text-[11px] text-gray-500 mt-1">${item.notes}</p>` : ''}
+                        </div>
+                        <span class="font-semibold">$${lineTotal.toFixed(2)}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        html += `
+            <div class="mt-4 border-t pt-3 space-y-1 text-sm">
+                <div class="flex justify-between"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
+                <div class="flex justify-between font-bold text-lg text-pink-600">
+                    <span>Total</span><span>$${subtotal.toFixed(2)}</span>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">
+                    El valor final puede variar ligeramente según sabores premium, toppings extras o cambios de combinación.
+                </p>
+            </div>
+        `;
+        checkoutSummary.innerHTML = html;
+    }
+
+    // Eventos en tarjetas
+    productList.addEventListener('click', (e) => {
+        const card = e.target.closest('.flex-col');
+        if (!card) return;
+
+        if (e.target.classList.contains('quantity-btn')) {
+            const valueSpan = card.querySelector('.quantity-value');
+            let currentValue = parseInt(valueSpan.textContent);
+            if (e.target.classList.contains('plus-btn')) currentValue++;
+            else if (e.target.classList.contains('minus-btn') && currentValue > 1) currentValue--;
+            valueSpan.textContent = currentValue;
+        }
+
+        if (e.target.classList.contains('add-to-cart-btn')) {
+            const index = e.target.dataset.index;
+            const product = products[index];
+
+            let basePrice = product.price || 0;
+            let optionDetail = '';
+            let optionLabel = '';
+            let jellyDetail = '';
+            let jellyExtra = 0;
+
+            const comboSelect = card.querySelector('.combo-select');
+            if (comboSelect && product.options) {
+                const opt = product.options[parseInt(comboSelect.value, 10)];
+                basePrice = opt.price;
+                optionDetail = opt.detail;
+                optionLabel = opt.label;
             }
 
-            if (e.target.classList.contains('add-to-cart-btn')) {
-                const id = e.target.dataset.id;
-                const product = products.find(p => p.id == id);
-                if (!product) return;
-
-                const quantity = parseInt(card.querySelector('.quantity-value').textContent);
-
-                const sizeSelect = card.querySelector('.option-size');
-                const optionIndex = sizeSelect ? parseInt(sizeSelect.value) : null;
-
-                const jellySelect = card.querySelector('.jelly-select');
-                const jellyIndex = jellySelect ? parseInt(jellySelect.value) : null;
-
-                const notes = (card.querySelector('.item-notes')?.value || '').trim();
-
-                addToCart({
-                    product,
-                    quantity,
-                    optionIndex,
-                    jellyIndex,
-                    notes
-                });
-
-                showNotification(`${quantity} "${product.name}" agregado(s) al carrito.`);
-
-                card.querySelector('.quantity-value').textContent = '1';
-            }
-        });
-
-        // Cambiar precio cuando se cambia la presentación o la jalea
-        productList.addEventListener('change', (e) => {
-            if (!e.target.classList.contains('option-size') && !e.target.classList.contains('jelly-select')) return;
-            const card = e.target.closest('.product-card');
-            if (!card) return;
-
-            const productId = card.dataset.productId;
-            const product = products.find(p => p.id == productId);
-            if (!product) return;
-
-            const hasOptions = Array.isArray(product.options) && product.options.length > 0;
-
-            const sizeSelect  = card.querySelector('.option-size');
             const jellySelect = card.querySelector('.jelly-select');
-
-            const optionIndex = sizeSelect ? parseInt(sizeSelect.value) : null;
-            const jellyIndex  = jellySelect ? parseInt(jellySelect.value) : null;
-
-            const priceEl  = card.querySelector('.product-price');
-            const detailEl = card.querySelector('.option-detail');
-
-            const price = computePrice(product, hasOptions ? optionIndex : null, jellyIndex);
-            if (priceEl) priceEl.textContent = price.toFixed(2);
-
-            if (detailEl && hasOptions && product.options[optionIndex]) {
-                detailEl.textContent = 'Incluye: ' + product.options[optionIndex].detail;
-            }
-        });
-
-        clearCartBtn.addEventListener('click', () => {
-            if (!confirm('¿Vaciar todo el carrito?')) return;
-            cart = {};
-            updateCartUI();
-        });
-
-        // --------- GEOLOCALIZACIÓN / UBICACIÓN ---------
-        shareLocationBtn.addEventListener('click', () => {
-            if (!navigator.geolocation) {
-                locationStatus.textContent = 'Tu navegador no soporta geolocalización.';
-                locationStatus.classList.remove('text-green-600');
-                locationStatus.classList.add('text-red-500');
-                return;
-            }
-
-            locationStatus.textContent = 'Obteniendo ubicación...';
-            locationStatus.classList.remove('text-red-500');
-            locationStatus.classList.add('text-gray-600');
-
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    sharedLocation = `https://www.google.com/maps?q=${latitude},${longitude}`;
-                    locationStatus.textContent = '¡Ubicación guardada para el pedido! ✅';
-                    locationStatus.classList.remove('text-gray-600');
-                    locationStatus.classList.add('text-green-600');
-                },
-                () => {
-                    locationStatus.textContent = 'No se pudo obtener la ubicación.';
-                    locationStatus.classList.remove('text-green-600');
-                    locationStatus.classList.add('text-red-500');
+            if (jellySelect) {
+                const jelly = jellyOptions.find(j => j.id === jellySelect.value);
+                if (jelly) {
+                    jellyDetail = jelly.name;
+                    jellyExtra = jelly.extra;
                 }
-            );
-        });
-
-        // --------- ENVÍO A WHATSAPP ---------
-        orderForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (Object.keys(cart).length === 0) {
-                showNotification('Tu carrito está vacío. Agrega productos antes de enviar el pedido.');
-                return;
             }
 
-            const name      = document.getElementById('name').value.trim();
-            const phone     = document.getElementById('phone').value.trim();
-            const address   = document.getElementById('address').value.trim();
-            const extra     = document.getElementById('extra').value.trim();
-            const orderType = document.getElementById('orderType').value;
+            const notesInput = card.querySelector('.notes-input');
+            const notes = notesInput ? notesInput.value.trim() : '';
 
-            if (!name || !phone) {
-                showNotification('Por favor, completa tu nombre y número de WhatsApp.');
-                return;
-            }
+            const quantityEl = card.querySelector('.quantity-value');
+            const quantity = parseInt(quantityEl.textContent, 10) || 1;
 
-            if (orderType === 'domicilio' && !address) {
-                showNotification('Para entrega a domicilio, escribe tu dirección y referencia.');
-                return;
-            }
+            const finalUnitPrice = basePrice + jellyExtra;
+            const itemKey = index + '|' + (optionLabel || '') + '|' + (jellySelect ? jellySelect.value : '') + '|' + (notes || '');
 
-            let message = `Hola Antojitos Luli Gourmet 👋\nQuiero hacer el siguiente pedido:\n\n`;
-            let total = 0;
+            const itemData = {
+                name: product.name + (optionLabel ? ' - ' + optionLabel : ''),
+                detail: [optionDetail, jellyDetail].filter(Boolean).join(' · '),
+                notes,
+                price: finalUnitPrice,
+                quantity
+            };
 
-            for (const key in cart) {
-                const item = cart[key];
-                message += `• ${item.quantity} x ${item.name}\n`;
-                if (item.jelly) {
-                    message += `   Jalea: ${item.jelly.name}\n`;
-                }
-                if (item.notes) {
-                    message += `   Detalles: ${item.notes}\n`;
-                }
-                total += item.price * item.quantity;
-            }
+            addToCart(itemKey, itemData);
+            showNotification(`${quantity} "${product.name}" agregado(s) al carrito.`);
+            if (notesInput) notesInput.value = '';
+            quantityEl.textContent = '1';
+        }
+    });
 
-            message += `\nTotal aproximado: $${total.toFixed(2)}\n\n`;
-            message += `Tipo de pedido: *${orderType === 'domicilio' ? 'Entrega a domicilio' : 'Servirse en el local'}*\n`;
-            message += `Nombre: ${name}\n`;
-            message += `WhatsApp: ${phone}\n`;
-
-            if (orderType === 'domicilio') {
-                message += `Dirección: ${address}\n`;
-            }
-
-            if (sharedLocation) {
-                message += `Ubicación (Google Maps): ${sharedLocation}\n`;
-            }
-
-            if (extra) {
-                message += `Notas generales del pedido: ${extra}\n`;
-            }
-
-            message += `\nForma de pago: transferencia/depósito a la cuenta indicada o pago en el local.\n`;
-            message += `\nHorario de atención:\nLunes a jueves 14h00–19h00\nViernes y sábado 14h00–21h00\n`;
-
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-
-            showNotification('Tu pedido se abrió en WhatsApp. Solo revisa y envíalo. 🩷');
-
-            // Reset
-            cart = {};
-            sharedLocation = null;
-            orderForm.reset();
-            locationStatus.textContent = '';
-            updateCartUI();
-            showPage('home');
-        });
-
-        // --------- NAVEGACIÓN ENTRE PÁGINAS ---------
-        const pages = document.querySelectorAll('main');
-        window.showPage = (pageId) => {
-            pages.forEach(page => page.classList.add('hidden'));
-            document.getElementById(`${pageId}-page`).classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (pageId === 'checkout') updateCheckoutPage();
-        };
-
-        // --------- INICIO ---------
-        renderProducts();
+    clearCartBtn.addEventListener('click', () => {
+        if (!confirm('¿Vaciar todo el carrito?')) return;
+        cart = {};
         updateCartUI();
     });
+
+    // GEOLOCALIZACIÓN
+    shareLocationBtn.addEventListener('click', () => {
+        if (!navigator.geolocation) {
+            locationStatus.textContent = 'Tu navegador no soporta geolocalización.';
+            locationStatus.classList.remove('text-green-600');
+            locationStatus.classList.add('text-red-500');
+            return;
+        }
+
+        locationStatus.textContent = 'Obteniendo ubicación...';
+        locationStatus.classList.remove('text-red-500');
+        locationStatus.classList.add('text-gray-600');
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                sharedLocation = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                locationStatus.textContent = '¡Ubicación guardada para el pedido! ✅';
+                locationStatus.classList.remove('text-gray-600');
+                locationStatus.classList.add('text-green-600');
+            },
+            () => {
+                locationStatus.textContent = 'No se pudo obtener la ubicación.';
+                locationStatus.classList.remove('text-green-600');
+                locationStatus.classList.add('text-red-500');
+            }
+        );
+    });
+
+    // ENVÍO A WHATSAPP
+    orderForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (Object.keys(cart).length === 0) {
+            showNotification('Tu carrito está vacío. Agrega productos antes de enviar el pedido.');
+            return;
+        }
+
+        const name      = document.getElementById('name').value.trim();
+        const phone     = document.getElementById('phone').value.trim();
+        const address   = document.getElementById('address').value.trim();
+        const extra     = document.getElementById('extra').value.trim();
+        const orderType = document.getElementById('orderType').value;
+
+        if (!name || !phone) {
+            showNotification('Por favor, completa tu nombre y número de WhatsApp.');
+            return;
+        }
+
+        if (orderType === 'domicilio' && !address) {
+            showNotification('Para entrega a domicilio, escribe tu dirección y referencia.');
+            return;
+        }
+
+        let message = 'Hola Antojitos Luli Gourmet 👋\nQuiero hacer el siguiente pedido:\n\n';
+        let total = 0;
+
+        for (const key in cart) {
+            const item = cart[key];
+            const lineTotal = item.price * item.quantity;
+            message += `• ${item.quantity} x ${item.name} - $${lineTotal.toFixed(2)}\n`;
+            if (item.detail) message += `   👉 ${item.detail}\n`;
+            if (item.notes)  message += `   📝 ${item.notes}\n`;
+            total += lineTotal;
+        }
+
+        message += `\nTotal aproximado: $${total.toFixed(2)}\n\n`;
+        message += `Tipo de pedido: *${orderType === 'domicilio' ? 'Entrega a domicilio' : 'Servirse en el local'}*\n`;
+        message += `Nombre: ${name}\n`;
+        message += `WhatsApp: ${phone}\n`;
+
+        if (orderType === 'domicilio') {
+            message += `Dirección: ${address}\n`;
+        }
+
+        if (sharedLocation) {
+            message += `Ubicación (Google Maps): ${sharedLocation}\n`;
+        }
+
+        if (extra) {
+            message += `Notas generales del pedido: ${extra}\n`;
+        }
+
+        message += '\nForma de pago: transferencia/depósito a la cuenta indicada o pago en el local.\n';
+        message += '\nHorario de atención:\nLunes a jueves 14h00–19h00\nViernes y sábado 14h00–21h00\n';
+
+        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+
+        showNotification('Tu pedido se abrió en WhatsApp. Solo revisa y envíalo. 🩷');
+
+        cart = {};
+        sharedLocation = null;
+        orderForm.reset();
+        locationStatus.textContent = '';
+        updateCartUI();
+        showPage('home');
+    });
+
+    // NAVEGACIÓN ENTRE HOME Y CHECKOUT
+    const pages = document.querySelectorAll('main');
+    window.showPage = (pageId) => {
+        pages.forEach(page => page.classList.add('hidden'));
+        document.getElementById(`${pageId}-page`).classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (pageId === 'checkout') updateCheckoutPage();
+    };
+
+    // INICIO
+    renderProducts();
+    updateCartUI();
+});
     </script>
 </body>
 </html>
