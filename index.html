@@ -157,9 +157,10 @@
                     Menú Antojitos Luli
                 </h2>
                 <p class="text-center text-gray-700 mb-8 text-sm md:text-base">
-                    Elige tu producto, selecciona la <strong>presentación</strong> y escribe tus
-                    <strong>toppings, jaleas y frutas</strong> según el combo que escojas.  
-                    Al finalizar, podrás marcar si el pedido es para <strong>servirse en el local</strong> o para <strong>doscimicilio</strong>.
+                    Elige tu producto, selecciona la <strong>presentación</strong> y escoge la
+                    <strong>jalea principal</strong>.  
+                    Si tu combo incluye varias jaleas y frutas, escríbelas en el detalle.  
+                    Al finalizar, podrás marcar si el pedido es para <strong>servirse en el local</strong> o para <strong>entrega a domicilio</strong>, con opción de compartir tu ubicación.
                 </p>
                 <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- JS inyecta las tarjetas aquí -->
@@ -387,6 +388,26 @@
         // --------- CONFIG ---------
         const WHATSAPP_NUMBER = '593939347588'; // Luli
 
+        // Recargos por tipo de jalea.
+        // Ajusta estos valores si quieres cambiar el precio.
+        const jellyOptions = [
+            {
+                id: 'estandar',
+                name: 'Jalea estándar (chocolate, fresa, mora, arequipe, etc.)',
+                extra: 0.00
+            },
+            {
+                id: 'frutal-especial',
+                name: 'Jalea frutal especial (+$0.25)',
+                extra: 0.25
+            },
+            {
+                id: 'premium',
+                name: 'Jalea premium Nutella / Kinder / Ferrero (+$0.50)',
+                extra: 0.50
+            }
+        ];
+
         // Imágenes base (puedes cambiarlas por las que quieras)
         const IMG_DONAS_1   = 'https://i.postimg.cc/30gcj4K3/Whats-App-Image-2025-11-15-at-14-59-07-1.jpg';
         const IMG_DONAS_2   = 'https://i.postimg.cc/BPWz1cG0/Whats-App-Image-2025-11-15-at-14-59-05-1.jpg';
@@ -401,7 +422,7 @@
         const IMG_FRUTAS    = 'https://i.postimg.cc/8f8YrBg9/Whats-App-Image-2025-11-15-at-14-59-11.jpg';
         const IMG_DETALLE   = 'https://i.postimg.cc/Rqfyx8wg/Whats-App-Image-2025-11-15-at-14-59-09-1.jpg';
 
-        // --------- PRODUCTOS (con combinaciones y precios del menú) ---------
+        // --------- PRODUCTOS (precios sacados del PDF) ---------
         const products = [
             // MINI DONAS
             {
@@ -410,14 +431,14 @@
                 category: 'Mini Donas',
                 img: IMG_DONAS_1,
                 desc: 'Cajitas de mini donas con toppings y jaleas a elección.',
-                customizable: true,
+                customizable: true, // permite toppings/jaleas/frutas + selección de jalea principal
                 options: [
-                    { label: '4 mini donas',  detail: 'Incluye 1 topping + 1 jalea',            price: 1.25 },
-                    { label: '8 mini donas',  detail: 'Incluye 2 toppings + 2 jaleas',          price: 2.25 },
-                    { label: '12 mini donas', detail: 'Incluye 3 toppings + 3 jaleas',          price: 3.25 },
-                    { label: '16 mini donas', detail: 'Incluye 4 toppings + 4 jaleas',          price: 4.25 },
-                    { label: '20 mini donas', detail: 'Incluye 5 toppings + 5 jaleas',          price: 6.25 },
-                    { label: '24 mini donas', detail: 'Incluye 6 toppings + 6 jaleas',          price: 7.25 },
+                    { label: '4 mini donas',  detail: '1 topping + 1 jalea',             price: 1.25 },
+                    { label: '8 mini donas',  detail: '2 toppings + 2 jaleas',           price: 2.25 },
+                    { label: '12 mini donas', detail: '3 toppings + 3 jaleas',           price: 3.25 },
+                    { label: '16 mini donas', detail: '4 toppings + 4 jaleas',           price: 4.25 },
+                    { label: '20 mini donas', detail: '5 toppings + 5 jaleas',           price: 6.25 },
+                    { label: '24 mini donas', detail: '6 toppings + 6 jaleas',           price: 7.25 },
                 ]
             },
             {
@@ -428,12 +449,12 @@
                 desc: 'Mini donas con frutas frescas, perfectas para algo más frutal.',
                 customizable: true,
                 options: [
-                    { label: '4 mini donas',  detail: 'Incluye 1 fruta',                        price: 1.50 },
-                    { label: '8 mini donas',  detail: 'Incluye 2 frutas',                       price: 2.50 },
-                    { label: '12 mini donas', detail: 'Incluye 3 frutas',                       price: 3.50 },
-                    { label: '16 mini donas', detail: 'Incluye 4 frutas',                       price: 4.50 },
-                    { label: '20 mini donas', detail: 'Incluye 5 frutas',                       price: 6.50 },
-                    { label: '24 mini donas', detail: 'Incluye 6 frutas',                       price: 7.50 },
+                    { label: '4 mini donas',  detail: 'Incluye 1 fruta',                 price: 1.50 },
+                    { label: '8 mini donas',  detail: 'Incluye 2 frutas',                price: 2.50 },
+                    { label: '12 mini donas', detail: 'Incluye 3 frutas',                price: 3.50 },
+                    { label: '16 mini donas', detail: 'Incluye 4 frutas',                price: 4.50 },
+                    { label: '20 mini donas', detail: 'Incluye 5 frutas',                price: 6.50 },
+                    { label: '24 mini donas', detail: 'Incluye 6 frutas',                price: 7.50 },
                 ]
             },
             {
@@ -444,11 +465,11 @@
                 desc: 'Combinación de toppings, jaleas y frutas en una sola cajita.',
                 customizable: true,
                 options: [
-                    { label: '8 mini donas',  detail: '1 topping + 1 jalea + fruta',           price: 2.75 },
-                    { label: '12 mini donas', detail: '2 toppings + 2 jaleas + fruta',         price: 3.75 },
-                    { label: '16 mini donas', detail: '3 toppings + 3 jaleas + fruta',         price: 4.75 },
-                    { label: '20 mini donas', detail: '4 toppings + 4 jaleas + fruta',         price: 6.75 },
-                    { label: '24 mini donas', detail: '5 toppings + 5 jaleas + fruta',         price: 7.75 },
+                    { label: '8 mini donas',  detail: '1 topping + 1 jalea + fruta',     price: 2.75 },
+                    { label: '12 mini donas', detail: '2 toppings + 2 jaleas + fruta',   price: 3.75 },
+                    { label: '16 mini donas', detail: '3 toppings + 3 jaleas + fruta',   price: 4.75 },
+                    { label: '20 mini donas', detail: '4 toppings + 4 jaleas + fruta',   price: 6.75 },
+                    { label: '24 mini donas', detail: '5 toppings + 5 jaleas + fruta',   price: 7.75 },
                 ]
             },
 
@@ -461,9 +482,9 @@
                 desc: 'Waffles con toppings dulces y jaleas para personalizar.',
                 customizable: true,
                 options: [
-                    { label: 'Waffle Sencillo', detail: '1 topping + 1 jalea',                 price: 2.25 },
-                    { label: 'Waffle Doble',    detail: '2 toppings + 2 jaleas',               price: 3.25 },
-                    { label: 'Waffle LiLu',     detail: '3 toppings + 2 jaleas',               price: 4.25 },
+                    { label: 'Waffle Sencillo', detail: '1 topping + 1 jalea',            price: 2.25 },
+                    { label: 'Waffle Doble',    detail: '2 toppings + 2 jaleas',          price: 3.25 },
+                    { label: 'Waffle LiLu',     detail: '3 toppings + 2 jaleas',          price: 4.25 },
                 ]
             },
             {
@@ -474,9 +495,9 @@
                 desc: 'Waffles con frutas frescas y jaleas.',
                 customizable: true,
                 options: [
-                    { label: 'Presentación 1', detail: '1 fruta + 1 jalea',                    price: 2.50 },
-                    { label: 'Presentación 2', detail: '2 frutas + 1 jalea',                   price: 3.50 },
-                    { label: 'Presentación 3', detail: '3 frutas + 1 jalea',                   price: 4.50 },
+                    { label: 'Presentación 1', detail: '1 fruta + 1 jalea',               price: 2.50 },
+                    { label: 'Presentación 2', detail: '2 frutas + 1 jalea',              price: 3.50 },
+                    { label: 'Presentación 3', detail: '3 frutas + 1 jalea',              price: 4.50 },
                 ]
             },
             {
@@ -487,9 +508,9 @@
                 desc: 'Frutas + toppings + jaleas, todo en un solo waffle.',
                 customizable: true,
                 options: [
-                    { label: 'Waffle Mini',  detail: '1 fruta + 1 topping + 1 jalea',          price: 3.75 },
-                    { label: 'Waffle Deli',  detail: '2 frutas + 2 toppings + 2 jaleas',        price: 4.75 },
-                    { label: 'Waffle Full',  detail: '3 frutas + 3 toppings + 2 jaleas',        price: 5.75 },
+                    { label: 'Waffle Mini',  detail: '1 fruta + 1 topping + 1 jalea',      price: 3.75 },
+                    { label: 'Waffle Deli',  detail: '2 frutas + 2 toppings + 2 jaleas',   price: 4.75 },
+                    { label: 'Waffle Full',  detail: '3 frutas + 3 toppings + 2 jaleas',   price: 5.75 },
                 ]
             },
 
@@ -508,7 +529,7 @@
             { id: 'chamoy-mango',    name: 'Chamoyada de Mango',          category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Mango con chamoy y tajín.',            price: 3.50 },
             { id: 'chamoy-pina',     name: 'Chamoyada de Piña',           category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Piña fresca con chamoy.',              price: 3.25 },
             { id: 'chamoy-mara',     name: 'Chamoyada de Maracuyá',       category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Maracuyá con toque picantito.',        price: 3.25 },
-            { id: 'chamoy-mixta',    name: 'Chamoyada Mixta (fresa+mango)',category:'Chamoyadas',img: IMG_CHAMOY, desc: 'Mezcla frutal con chamoy.',              price: 3.75 },
+            { id: 'chamoy-mixta',    name: 'Chamoyada Mixta (fresa+mango)',category:'Chamoyadas',img: IMG_CHAMOY, desc:'Mezcla frutal con chamoy.',              price: 3.75 },
             { id: 'chamoy-botana',   name: 'Chamoyada con Botana',        category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Incluye botana y toppings.',           price: 4.75 },
 
             // MICHELADAS FRUTALES
@@ -576,7 +597,7 @@
         const notificationOk      = document.getElementById('notification-ok');
 
         // Estado
-        let cart = {};          // { key: { ...product, quantity, notes, option } }
+        let cart = {};          // key: item
         let sharedLocation = null;
 
         // --------- MODAL ELEGANTE ---------
@@ -595,6 +616,14 @@
             if (e.target === notificationModal) hideNotification();
         });
 
+        // --------- FUNCIONES AUXILIARES ---------
+        function computePrice(product, optionIndex, jellyIndex) {
+            const hasOptions = Array.isArray(product.options) && product.options.length > 0;
+            const base = hasOptions ? product.options[optionIndex].price : product.price;
+            const jelly = (typeof jellyIndex === 'number' && jellyOptions[jellyIndex]) ? jellyOptions[jellyIndex].extra : 0;
+            return base + jelly;
+        }
+
         // --------- RENDER PRODUCTOS ---------
         function renderProducts() {
             productList.innerHTML = '';
@@ -604,7 +633,17 @@
                 card.dataset.productId = product.id;
 
                 const hasOptions = Array.isArray(product.options) && product.options.length > 0;
-                const basePrice  = hasOptions ? product.options[0].price : product.price;
+                const hasJelly = !!product.customizable; // mini donas y waffles
+
+                const optionIndexDefault = 0;
+                const jellyIndexDefault = 0;
+
+                const basePrice = computePrice(
+                    product,
+                    hasOptions ? optionIndexDefault : null,
+                    hasJelly ? jellyIndexDefault : null
+                );
+
                 const firstDetail = hasOptions ? product.options[0].detail : '';
 
                 let optionsHtml = '';
@@ -621,16 +660,32 @@
                     `;
                 }
 
+                let jellyHtml = '';
+                if (hasJelly) {
+                    jellyHtml = `
+                        <label class="block text-[11px] text-gray-600 mb-1 text-left mt-1">
+                            Jalea principal
+                        </label>
+                        <select class="jelly-select w-full border rounded-lg text-xs py-2 px-2 mb-1">
+                            ${jellyOptions.map((j, idx) => `
+                                <option value="${idx}">
+                                    ${j.name}
+                                </option>
+                            `).join('')}
+                        </select>
+                    `;
+                }
+
                 let notesHtml = '';
                 if (product.customizable) {
                     notesHtml = `
                         <label class="block text-[11px] text-gray-600 mb-1 text-left mt-1">
-                            Toppings, jaleas y frutas
+                            Toppings, jaleas y frutas (detalle)
                         </label>
                         <textarea
                             class="item-notes w-full border rounded-lg text-xs p-2 mb-2"
                             rows="2"
-                            placeholder="Ej: Nutella + chispas; jalea fresa; frutas: fresa y banano. Respeta la cantidad incluida en el combo."></textarea>
+                            placeholder="Ej: Nutella + chispas; jaleas de fresa y chocolate; frutas: fresa y banano. Respeta la cantidad incluida en el combo."></textarea>
                     `;
                 }
 
@@ -648,6 +703,7 @@
                         </p>
                         ${hasOptions ? `<p class="option-detail text-[11px] text-gray-500 mb-2">Incluye: ${firstDetail}</p>` : ''}
                         ${optionsHtml}
+                        ${jellyHtml}
                         ${notesHtml}
                         <div class="flex items-center justify-center space-x-4 my-2">
                             <button class="quantity-btn minus-btn bg-gray-200 rounded-full w-8 h-8 text-lg font-bold text-gray-700">-</button>
@@ -665,23 +721,21 @@
         }
 
         // --------- CARRITO ---------
-        function addToCart(productId, quantity = 1, notes = '', optionIndex = null) {
-            const product = products.find(p => p.id == productId);
-            if (!product) return;
-
+        function addToCart(itemData) {
+            const { product, quantity, optionIndex, jellyIndex, notes } = itemData;
             const hasOptions = Array.isArray(product.options) && product.options.length > 0;
-            let optionObj = null;
-            let displayName = product.name;
-            let price = product.price;
-            let key = productId;
+            const hasJelly = typeof jellyIndex === 'number' && jellyOptions[jellyIndex];
 
-            if (hasOptions) {
-                const idx = (typeof optionIndex === 'number' && !isNaN(optionIndex)) ? optionIndex : 0;
-                optionObj = product.options[idx];
-                price = optionObj.price;
-                displayName = `${product.name} - ${optionObj.label}`;
-                key = `${productId}-${idx}`;
-            }
+            const optionObj = hasOptions ? product.options[optionIndex] : null;
+            const jellyObj  = hasJelly ? jellyOptions[jellyIndex] : null;
+
+            let displayName = product.name;
+            if (optionObj) displayName += ` - ${optionObj.label}`;
+
+            const price = computePrice(product, hasOptions ? optionIndex : null, hasJelly ? jellyIndex : null);
+
+            // Key única por producto + presentación + jalea
+            const key = `${product.id}${hasOptions ? '-' + optionIndex : ''}${hasJelly ? '-j' + jellyIndex : ''}`;
 
             if (cart[key]) {
                 cart[key].quantity += quantity;
@@ -693,13 +747,14 @@
             } else {
                 cart[key] = {
                     key,
-                    productId,
+                    productId: product.id,
                     baseName: product.name,
                     name: displayName,
                     price,
                     quantity,
                     notes: notes,
-                    option: optionObj
+                    option: optionObj,
+                    jelly: jellyObj
                 };
             }
 
@@ -735,6 +790,7 @@
                     <div class="py-2 border-b last:border-b-0 flex justify-between items-start text-sm">
                         <div>
                             <p class="font-semibold">${item.quantity} x ${item.name}</p>
+                            ${item.jelly ? `<p class="text-xs text-pink-600">Jalea: ${item.jelly.name}</p>` : ''}
                             ${item.notes ? `<p class="text-xs text-gray-500">Det.: ${item.notes}</p>` : ''}
                         </div>
                         <span class="font-semibold">$${(item.price * item.quantity).toFixed(2)}</span>
@@ -754,7 +810,7 @@
             checkoutSummary.innerHTML = html;
         }
 
-        // --------- EVENTOS PRODUCTOS (click y cambio de presentación) ---------
+        // --------- EVENTOS PRODUCTOS ---------
         productList.addEventListener('click', (e) => {
             const card = e.target.closest('.product-card');
             if (!card) return;
@@ -769,42 +825,59 @@
 
             if (e.target.classList.contains('add-to-cart-btn')) {
                 const id = e.target.dataset.id;
+                const product = products.find(p => p.id == id);
+                if (!product) return;
+
                 const quantity = parseInt(card.querySelector('.quantity-value').textContent);
-                const notes = (card.querySelector('.item-notes')?.value || '').trim();
+
                 const sizeSelect = card.querySelector('.option-size');
                 const optionIndex = sizeSelect ? parseInt(sizeSelect.value) : null;
 
-                addToCart(id, quantity, notes, optionIndex);
+                const jellySelect = card.querySelector('.jelly-select');
+                const jellyIndex = jellySelect ? parseInt(jellySelect.value) : null;
 
-                const product = products.find(p => p.id == id);
-                const productName = product ? product.name : 'Producto';
-                showNotification(`${quantity} "${productName}" agregado(s) al carrito.`);
+                const notes = (card.querySelector('.item-notes')?.value || '').trim();
+
+                addToCart({
+                    product,
+                    quantity,
+                    optionIndex,
+                    jellyIndex,
+                    notes
+                });
+
+                showNotification(`${quantity} "${product.name}" agregado(s) al carrito.`);
 
                 card.querySelector('.quantity-value').textContent = '1';
             }
         });
 
-        // Cambiar precio cuando se cambia la presentación
+        // Cambiar precio cuando se cambia la presentación o la jalea
         productList.addEventListener('change', (e) => {
-            if (!e.target.classList.contains('option-size')) return;
+            if (!e.target.classList.contains('option-size') && !e.target.classList.contains('jelly-select')) return;
             const card = e.target.closest('.product-card');
             if (!card) return;
 
             const productId = card.dataset.productId;
             const product = products.find(p => p.id == productId);
-            if (!product || !Array.isArray(product.options)) return;
+            if (!product) return;
 
-            const idx = parseInt(e.target.value);
-            const option = product.options[idx];
+            const hasOptions = Array.isArray(product.options) && product.options.length > 0;
 
-            const priceEl = card.querySelector('.product-price');
+            const sizeSelect  = card.querySelector('.option-size');
+            const jellySelect = card.querySelector('.jelly-select');
+
+            const optionIndex = sizeSelect ? parseInt(sizeSelect.value) : null;
+            const jellyIndex  = jellySelect ? parseInt(jellySelect.value) : null;
+
+            const priceEl  = card.querySelector('.product-price');
             const detailEl = card.querySelector('.option-detail');
 
-            if (priceEl && option) {
-                priceEl.textContent = option.price.toFixed(2);
-            }
-            if (detailEl && option) {
-                detailEl.textContent = 'Incluye: ' + option.detail;
+            const price = computePrice(product, hasOptions ? optionIndex : null, jellyIndex);
+            if (priceEl) priceEl.textContent = price.toFixed(2);
+
+            if (detailEl && hasOptions && product.options[optionIndex]) {
+                detailEl.textContent = 'Incluye: ' + product.options[optionIndex].detail;
             }
         });
 
@@ -873,6 +946,9 @@
             for (const key in cart) {
                 const item = cart[key];
                 message += `• ${item.quantity} x ${item.name}\n`;
+                if (item.jelly) {
+                    message += `   Jalea: ${item.jelly.name}\n`;
+                }
                 if (item.notes) {
                     message += `   Detalles: ${item.notes}\n`;
                 }
