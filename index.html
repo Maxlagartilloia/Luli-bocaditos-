@@ -87,7 +87,7 @@
     <!-- HEADER SOLO CON LOGO + SECCIONES + CARRITO -->
     <header class="bg-white/95 backdrop-blur-md shadow-md sticky top-0 z-40">
         <div class="max-w-6xl mx-auto px-4 md:px-6 py-1 flex justify-between items-center">
-            <!-- LOGO GRANDE (DOBLE) -->
+            <!-- LOGO GRANDE -->
             <a href="#" onclick="showPage('home')" class="flex items-center">
                 <img src="https://i.postimg.cc/Z5WGhJk6/IMG_0161.png"
                      alt="Logo Antojitos Luli Gourmet"
@@ -130,7 +130,7 @@
                 </p>
                 <div class="flex flex-wrap justify-center gap-3 mb-6">
                     <div class="bg-white/90 rounded-full px-4 py-2 text-xs md:text-sm text-gray-700 shadow-sm">
-                        <i class="fas fa-star text-pink-500 mr-1"></i> Especialidad en mini donas y bolos tres leches
+                        <i class="fas fa-star text-pink-500 mr-1"></i> Especialidad en mini donas y bolos de tres leches
                     </div>
                     <div class="bg-white/90 rounded-full px-4 py-2 text-xs md:text-sm text-gray-700 shadow-sm">
                         <i class="fas fa-heart text-pink-500 mr-1"></i> Perfectos para tardes dulces y detallitos
@@ -156,9 +156,10 @@
                 <h2 class="text-3xl font-bold mb-8 text-center text-pink-600">
                     Menú Antojitos Luli
                 </h2>
-                <p class="text-center text-gray-700 mb-8">
-                    Elige tus productos favoritos, ajusta la cantidad y agrégalos al carrito.  
-                    Al finalizar, podrás marcar si el pedido es para <strong>servirse en el local</strong> o para <strong>entrega a domicilio</strong>.
+                <p class="text-center text-gray-700 mb-8 text-sm md:text-base">
+                    Elige tu producto, selecciona la <strong>presentación</strong> y escribe tus
+                    <strong>toppings, jaleas y frutas</strong> según el combo que escojas.  
+                    Al finalizar, podrás marcar si el pedido es para <strong>servirse en el local</strong> o para <strong>doscimicilio</strong>.
                 </p>
                 <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- JS inyecta las tarjetas aquí -->
@@ -255,10 +256,10 @@
                             </div>
                             <p id="location-status-checkout" class="text-xs text-center text-green-600 font-semibold mt-1"></p>
                             <div class="mb-2">
-                                <label for="extra" class="block text-gray-700 font-semibold mb-1 text-sm">Notas del pedido</label>
+                                <label for="extra" class="block text-gray-700 font-semibold mb-1 text-sm">Notas generales del pedido</label>
                                 <textarea id="extra" rows="2"
                                           class="w-full px-3 py-2 border rounded-lg text-sm"
-                                          placeholder="Ej: mesa 3, sin crema, sin hielo, sabores, etc."></textarea>
+                                          placeholder="Ej: mesa 3, sin hielo, sorpresa de cumpleaños, etc."></textarea>
                             </div>
                         </form>
                     </div>
@@ -386,54 +387,176 @@
         // --------- CONFIG ---------
         const WHATSAPP_NUMBER = '593939347588'; // Luli
 
-        // Productos principales
+        // Imágenes base (puedes cambiarlas por las que quieras)
+        const IMG_DONAS_1   = 'https://i.postimg.cc/30gcj4K3/Whats-App-Image-2025-11-15-at-14-59-07-1.jpg';
+        const IMG_DONAS_2   = 'https://i.postimg.cc/BPWz1cG0/Whats-App-Image-2025-11-15-at-14-59-05-1.jpg';
+        const IMG_DONAS_3   = 'https://i.postimg.cc/MfkLjb8q/Whats-App-Image-2025-11-15-at-14-59-05-2.jpg';
+        const IMG_WAFFLES   = 'https://i.postimg.cc/K3nH7kZx/Whats-App-Image-2025-11-15-at-14-59-06.jpg';
+        const IMG_WAFFLES_2 = 'https://i.postimg.cc/T58sWqXT/Whats-App-Image-2025-11-15-at-14-59-06-1.jpg';
+        const IMG_WAFFLES_3 = 'https://i.postimg.cc/bSQB0Dq7/Whats-App-Image-2025-11-15-at-14-59-06-2.jpg';
+        const IMG_FRAPPE    = 'https://i.postimg.cc/MfyF0MWV/Whats-App-Image-2025-11-15-at-14-59-08.jpg';
+        const IMG_CHAMOY    = 'https://i.postimg.cc/tnhMdZXx/Whats-App-Image-2025-11-15-at-14-59-08-2.jpg';
+        const IMG_MICHE     = 'https://i.postimg.cc/6TRgxSCY/Whats-App-Image-2025-11-15-at-14-59-09.jpg';
+        const IMG_BOLOS     = 'https://i.postimg.cc/0KpBGM86/Whats-App-Image-2025-11-15-at-14-59-08-1.jpg';
+        const IMG_FRUTAS    = 'https://i.postimg.cc/8f8YrBg9/Whats-App-Image-2025-11-15-at-14-59-11.jpg';
+        const IMG_DETALLE   = 'https://i.postimg.cc/Rqfyx8wg/Whats-App-Image-2025-11-15-at-14-59-09-1.jpg';
+
+        // --------- PRODUCTOS (con combinaciones y precios del menú) ---------
         const products = [
             // MINI DONAS
-            { id: 1, name: 'Mini donitas clásicas x4', price: 1.00, 
-              img: 'https://i.postimg.cc/30gcj4K3/Whats-App-Image-2025-11-15-at-14-59-07-1.jpg',
-              desc: '4 mini donitas con 1 topping y 1 jalea.' },
-            { id: 2, name: 'Mini donitas clásicas x8', price: 2.00, 
-              img: 'https://i.postimg.cc/BPWz1cG0/Whats-App-Image-2025-11-15-at-14-59-05-1.jpg',
-              desc: '8 mini donitas con 2 toppings y 2 jaleas.' },
-            { id: 3, name: 'Mini donitas mix x12', price: 3.00, 
-              img: 'https://i.postimg.cc/MfkLjb8q/Whats-App-Image-2025-11-15-at-14-59-05-2.jpg',
-              desc: '12 mini donitas con toppings, jaleas y frutitas.' },
+            {
+                id: 'mini-clasicas',
+                name: 'Mini Donas Clásicas',
+                category: 'Mini Donas',
+                img: IMG_DONAS_1,
+                desc: 'Cajitas de mini donas con toppings y jaleas a elección.',
+                customizable: true,
+                options: [
+                    { label: '4 mini donas',  detail: 'Incluye 1 topping + 1 jalea',            price: 1.25 },
+                    { label: '8 mini donas',  detail: 'Incluye 2 toppings + 2 jaleas',          price: 2.25 },
+                    { label: '12 mini donas', detail: 'Incluye 3 toppings + 3 jaleas',          price: 3.25 },
+                    { label: '16 mini donas', detail: 'Incluye 4 toppings + 4 jaleas',          price: 4.25 },
+                    { label: '20 mini donas', detail: 'Incluye 5 toppings + 5 jaleas',          price: 6.25 },
+                    { label: '24 mini donas', detail: 'Incluye 6 toppings + 6 jaleas',          price: 7.25 },
+                ]
+            },
+            {
+                id: 'mini-frutas',
+                name: 'Mini Donas con Frutas',
+                category: 'Mini Donas',
+                img: IMG_DONAS_2,
+                desc: 'Mini donas con frutas frescas, perfectas para algo más frutal.',
+                customizable: true,
+                options: [
+                    { label: '4 mini donas',  detail: 'Incluye 1 fruta',                        price: 1.50 },
+                    { label: '8 mini donas',  detail: 'Incluye 2 frutas',                       price: 2.50 },
+                    { label: '12 mini donas', detail: 'Incluye 3 frutas',                       price: 3.50 },
+                    { label: '16 mini donas', detail: 'Incluye 4 frutas',                       price: 4.50 },
+                    { label: '20 mini donas', detail: 'Incluye 5 frutas',                       price: 6.50 },
+                    { label: '24 mini donas', detail: 'Incluye 6 frutas',                       price: 7.50 },
+                ]
+            },
+            {
+                id: 'mini-mix',
+                name: 'Mini Donas Mix (topping + fruta)',
+                category: 'Mini Donas',
+                img: IMG_DONAS_3,
+                desc: 'Combinación de toppings, jaleas y frutas en una sola cajita.',
+                customizable: true,
+                options: [
+                    { label: '8 mini donas',  detail: '1 topping + 1 jalea + fruta',           price: 2.75 },
+                    { label: '12 mini donas', detail: '2 toppings + 2 jaleas + fruta',         price: 3.75 },
+                    { label: '16 mini donas', detail: '3 toppings + 3 jaleas + fruta',         price: 4.75 },
+                    { label: '20 mini donas', detail: '4 toppings + 4 jaleas + fruta',         price: 6.75 },
+                    { label: '24 mini donas', detail: '5 toppings + 5 jaleas + fruta',         price: 7.75 },
+                ]
+            },
 
             // WAFFLES
-            { id: 4, name: 'Waffle sencilla', price: 2.00, 
-              img: 'https://i.postimg.cc/K3nH7kZx/Whats-App-Image-2025-11-15-at-14-59-06.jpg',
-              desc: 'Waffle con 1 topping y 1 jalea.' },
-            { id: 5, name: 'Waffle con frutas', price: 2.25, 
-              img: 'https://i.postimg.cc/T58sWqXT/Whats-App-Image-2025-11-15-at-14-59-06-1.jpg',
-              desc: 'Waffle con frutas frescas y jalea.' },
-            { id: 6, name: 'Waffle mix Luli', price: 3.50, 
-              img: 'https://i.postimg.cc/bSQB0Dq7/Whats-App-Image-2025-11-15-at-14-59-06-2.jpg',
-              desc: 'Waffle con frutas, toppings y jaleas combinadas.' },
+            {
+                id: 'waffle-toppings',
+                name: 'Waffles con Toppings y Jaleas',
+                category: 'Waffles',
+                img: IMG_WAFFLES,
+                desc: 'Waffles con toppings dulces y jaleas para personalizar.',
+                customizable: true,
+                options: [
+                    { label: 'Waffle Sencillo', detail: '1 topping + 1 jalea',                 price: 2.25 },
+                    { label: 'Waffle Doble',    detail: '2 toppings + 2 jaleas',               price: 3.25 },
+                    { label: 'Waffle LiLu',     detail: '3 toppings + 2 jaleas',               price: 4.25 },
+                ]
+            },
+            {
+                id: 'waffle-frutas',
+                name: 'Waffles con Frutas y Jaleas',
+                category: 'Waffles',
+                img: IMG_WAFFLES_2,
+                desc: 'Waffles con frutas frescas y jaleas.',
+                customizable: true,
+                options: [
+                    { label: 'Presentación 1', detail: '1 fruta + 1 jalea',                    price: 2.50 },
+                    { label: 'Presentación 2', detail: '2 frutas + 1 jalea',                   price: 3.50 },
+                    { label: 'Presentación 3', detail: '3 frutas + 1 jalea',                   price: 4.50 },
+                ]
+            },
+            {
+                id: 'waffle-mix',
+                name: 'Waffles Mixtos',
+                category: 'Waffles',
+                img: IMG_WAFFLES_3,
+                desc: 'Frutas + toppings + jaleas, todo en un solo waffle.',
+                customizable: true,
+                options: [
+                    { label: 'Waffle Mini',  detail: '1 fruta + 1 topping + 1 jalea',          price: 3.75 },
+                    { label: 'Waffle Deli',  detail: '2 frutas + 2 toppings + 2 jaleas',        price: 4.75 },
+                    { label: 'Waffle Full',  detail: '3 frutas + 3 toppings + 2 jaleas',        price: 5.75 },
+                ]
+            },
 
-            // FRAPPÉS & CHAMOYADAS
-            { id: 7, name: 'Frappé de café', price: 2.50, 
-              img: 'https://i.postimg.cc/xNrZbyVB/Whats-App-Image-2025-11-15-at-14-59-11-2.jpg',
-              desc: 'Frappé de café frío y cremoso.' },
-            { id: 8, name: 'Frappé sabor a elección', price: 3.50, 
-              img: 'https://i.postimg.cc/MfyF0MWV/Whats-App-Image-2025-11-15-at-14-59-08.jpg',
-              desc: 'Chicle, chocolate, oreo, fresa, coco, tango, pay de maracuyá o pay de fresa.' },
-            { id: 9, name: 'Chamoyada (fresa/mango/piña/maracuyá)', price: 3.00, 
-              img: 'https://i.postimg.cc/tnhMdZXx/Whats-App-Image-2025-11-15-at-14-59-08-2.jpg',
-              desc: 'Chamoyada fría con fruta y tajín.' },
+            // FRAPPÉS (precios individuales)
+            { id: 'frappe-cafe',     name: 'Frappé de Café',              category: 'Frappés', img: IMG_FRAPPE, desc: 'Café frío cremoso estilo Luli.',          price: 2.75 },
+            { id: 'frappe-chicle',   name: 'Frappé de Chicle',            category: 'Frappés', img: IMG_FRAPPE, desc: 'Dulce sabor a chicle azul.',               price: 3.25 },
+            { id: 'frappe-chocolate',name: 'Frappé de Chocolate',         category: 'Frappés', img: IMG_FRAPPE, desc: 'Chocolate frío y cremoso.',               price: 3.75 },
+            { id: 'frappe-oreo',     name: 'Frappé de Oreo',              category: 'Frappés', img: IMG_FRAPPE, desc: 'Con galletas Oreo trituradas.',           price: 3.75 },
+            { id: 'frappe-fresa',    name: 'Frappé de Fresa',             category: 'Frappés', img: IMG_FRAPPE, desc: 'Fresa cremosa y refrescante.',            price: 3.50 },
+            { id: 'frappe-tango',    name: 'Frappé de Galleta Tango',     category: 'Frappés', img: IMG_FRAPPE, desc: 'Con galleta Tango.',                      price: 3.75 },
+            { id: 'frappe-pay-mara', name: 'Frappé de Pay de Maracuyá',   category: 'Frappés', img: IMG_FRAPPE, desc: 'Inspirado en pay de maracuyá.',           price: 4.25 },
+            { id: 'frappe-pay-fresa',name: 'Frappé de Pay de Fresa',      category: 'Frappés', img: IMG_FRAPPE, desc: 'Inspirado en pay de fresa.',              price: 4.25 },
 
-            // MICHELADAS, BOLOS, FRUTAS
-            { id: 10, name: 'Michelada botanera', price: 6.00, 
-              img: 'https://i.postimg.cc/6TRgxSCY/Whats-App-Image-2025-11-15-at-14-59-09.jpg',
-              desc: 'Michelada frutal con botana y cerveza a elección.' },
-            { id: 11, name: 'Bolo tres leches (unidad)', price: 0.50, 
-              img: 'https://i.postimg.cc/0KpBGM86/Whats-App-Image-2025-11-15-at-14-59-08-1.jpg',
-              desc: 'Bolo frío a base de tres leches. Varios sabores.' },
-            { id: 12, name: 'Fresas / frutas con crema', price: 3.50, 
-              img: 'https://i.postimg.cc/8f8YrBg9/Whats-App-Image-2025-11-15-at-14-59-11.jpg',
-              desc: 'Copas frías de fresas o frutas mixtas con crema.' },
-            { id: 13, name: 'Detallito dulce especial', price: 10.00, 
-              img: 'https://i.postimg.cc/Rqfyx8wg/Whats-App-Image-2025-11-15-at-14-59-09-1.jpg',
-              desc: 'Arreglo dulce para cumpleaños, aniversarios y más.' },
+            // CHAMOYADAS
+            { id: 'chamoy-fresa',    name: 'Chamoyada de Fresa',          category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Dulce, ácida y picosita.',             price: 3.25 },
+            { id: 'chamoy-mango',    name: 'Chamoyada de Mango',          category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Mango con chamoy y tajín.',            price: 3.50 },
+            { id: 'chamoy-pina',     name: 'Chamoyada de Piña',           category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Piña fresca con chamoy.',              price: 3.25 },
+            { id: 'chamoy-mara',     name: 'Chamoyada de Maracuyá',       category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Maracuyá con toque picantito.',        price: 3.25 },
+            { id: 'chamoy-mixta',    name: 'Chamoyada Mixta (fresa+mango)',category:'Chamoyadas',img: IMG_CHAMOY, desc: 'Mezcla frutal con chamoy.',              price: 3.75 },
+            { id: 'chamoy-botana',   name: 'Chamoyada con Botana',        category: 'Chamoyadas', img: IMG_CHAMOY, desc: 'Incluye botana y toppings.',           price: 4.75 },
+
+            // MICHELADAS FRUTALES
+            { id: 'miche-corona',    name: 'Michelada Frutal Corona',     category: 'Micheladas', img: IMG_MICHE, desc: 'Corona con mezcla frutal.',            price: 4.75 },
+            { id: 'miche-club',      name: 'Michelada Frutal Club Verde', category: 'Micheladas', img: IMG_MICHE, desc: 'Club Verde con frutas y chamoy.',       price: 4.25 },
+            { id: 'miche-negra',     name: 'Michelada Frutal Pilsener Negra',category:'Micheladas',img: IMG_MICHE,desc:'Pilsener Negra con twist frutal.',       price: 3.75 },
+            {
+                id: 'miche-botanera',
+                name: 'La Botanera',
+                category: 'Micheladas',
+                img: IMG_MICHE,
+                desc: 'Cerveza, manzana verde, pepino, mango, mortadela, sabritas, chamoy, tajín y gomitas.',
+                price: 5.00
+            },
+            {
+                id: 'miche-jarra',
+                name: 'Jarra Chela',
+                category: 'Micheladas',
+                img: IMG_MICHE,
+                desc: 'Jarra frutal y refrescante para compartir.',
+                price: 8.50
+            },
+
+            // OTROS PRODUCTOS
+            {
+                id: 'bolos-tres-leches',
+                name: 'Bolo Tres Leches (unidad)',
+                category: 'Postres fríos',
+                img: IMG_BOLOS,
+                desc: 'Bolo frío a base de tres leches, ideal para detalle dulce.',
+                price: 0.50
+            },
+            {
+                id: 'frutas-crema',
+                name: 'Fresas / Frutas con crema',
+                category: 'Postres fríos',
+                img: IMG_FRUTAS,
+                desc: 'Copas frías de fresas o frutas mixtas con crema.',
+                price: 3.50
+            },
+            {
+                id: 'detallito-dulce',
+                name: 'Detallito dulce especial',
+                category: 'Detalles especiales',
+                img: IMG_DETALLE,
+                desc: 'Arreglo dulce para cumpleaños, aniversarios y ocasiones especiales.',
+                price: 10.00
+            },
         ];
 
         // --------- DOM ---------
@@ -453,7 +576,7 @@
         const notificationOk      = document.getElementById('notification-ok');
 
         // Estado
-        let cart = {};          // { id: { ...product, quantity } }
+        let cart = {};          // { key: { ...product, quantity, notes, option } }
         let sharedLocation = null;
 
         // --------- MODAL ELEGANTE ---------
@@ -477,17 +600,55 @@
             productList.innerHTML = '';
             products.forEach(product => {
                 const card = document.createElement('div');
-                card.className = 'bg-white/95 rounded-2xl text-center overflow-hidden flex flex-col shadow-md hover:shadow-xl transition-all duration-200 hover:-translate-y-1';
+                card.className = 'product-card bg-white/95 rounded-2xl text-center overflow-hidden flex flex-col shadow-md hover:shadow-xl transition-all duration-200 hover:-translate-y-1';
+                card.dataset.productId = product.id;
+
+                const hasOptions = Array.isArray(product.options) && product.options.length > 0;
+                const basePrice  = hasOptions ? product.options[0].price : product.price;
+                const firstDetail = hasOptions ? product.options[0].detail : '';
+
+                let optionsHtml = '';
+                if (hasOptions) {
+                    optionsHtml = `
+                        <label class="block text-[11px] text-gray-600 mb-1 text-left">Presentación</label>
+                        <select class="option-size w-full border rounded-lg text-xs py-2 px-2 mb-1">
+                            ${product.options.map((opt, idx) => `
+                                <option value="${idx}">
+                                    ${opt.label} - $${opt.price.toFixed(2)}
+                                </option>
+                            `).join('')}
+                        </select>
+                    `;
+                }
+
+                let notesHtml = '';
+                if (product.customizable) {
+                    notesHtml = `
+                        <label class="block text-[11px] text-gray-600 mb-1 text-left mt-1">
+                            Toppings, jaleas y frutas
+                        </label>
+                        <textarea
+                            class="item-notes w-full border rounded-lg text-xs p-2 mb-2"
+                            rows="2"
+                            placeholder="Ej: Nutella + chispas; jalea fresa; frutas: fresa y banano. Respeta la cantidad incluida en el combo."></textarea>
+                    `;
+                }
+
                 card.innerHTML = `
                     <div class="bg-pink-50/70">
                         <img src="${product.img}" alt="${product.name}"
                              class="w-full h-52 object-cover"
-                             onerror="this.onerror=null;this.src='https://placehold.co/400x220/FFE4F3/9D174D?text=${product.name.replace(/ /g,'+')}';">
+                             onerror="this.onerror=null;this.src='https://placehold.co/400x220/FFE4F3/9D174D?text=${encodeURIComponent(product.name)}';">
                     </div>
                     <div class="p-4 flex flex-col flex-1">
                         <h3 class="text-lg font-bold mb-1 text-pink-600">${product.name}</h3>
                         <p class="text-xs text-gray-600 flex-1 mb-2">${product.desc}</p>
-                        <p class="font-bold text-lg text-pink-500 mb-2">$${product.price.toFixed(2)}</p>
+                        <p class="font-bold text-lg text-pink-500 mb-1">
+                            $<span class="product-price">${basePrice.toFixed(2)}</span>
+                        </p>
+                        ${hasOptions ? `<p class="option-detail text-[11px] text-gray-500 mb-2">Incluye: ${firstDetail}</p>` : ''}
+                        ${optionsHtml}
+                        ${notesHtml}
                         <div class="flex items-center justify-center space-x-4 my-2">
                             <button class="quantity-btn minus-btn bg-gray-200 rounded-full w-8 h-8 text-lg font-bold text-gray-700">-</button>
                             <span class="quantity-value text-lg font-bold">1</span>
@@ -504,13 +665,44 @@
         }
 
         // --------- CARRITO ---------
-        function addToCart(productId, quantity = 1) {
-            if (cart[productId]) {
-                cart[productId].quantity += quantity;
-            } else {
-                const product = products.find(p => p.id == productId);
-                cart[productId] = { ...product, quantity };
+        function addToCart(productId, quantity = 1, notes = '', optionIndex = null) {
+            const product = products.find(p => p.id == productId);
+            if (!product) return;
+
+            const hasOptions = Array.isArray(product.options) && product.options.length > 0;
+            let optionObj = null;
+            let displayName = product.name;
+            let price = product.price;
+            let key = productId;
+
+            if (hasOptions) {
+                const idx = (typeof optionIndex === 'number' && !isNaN(optionIndex)) ? optionIndex : 0;
+                optionObj = product.options[idx];
+                price = optionObj.price;
+                displayName = `${product.name} - ${optionObj.label}`;
+                key = `${productId}-${idx}`;
             }
+
+            if (cart[key]) {
+                cart[key].quantity += quantity;
+                if (notes) {
+                    cart[key].notes = cart[key].notes
+                        ? cart[key].notes + '; ' + notes
+                        : notes;
+                }
+            } else {
+                cart[key] = {
+                    key,
+                    productId,
+                    baseName: product.name,
+                    name: displayName,
+                    price,
+                    quantity,
+                    notes: notes,
+                    option: optionObj
+                };
+            }
+
             updateCartUI();
         }
 
@@ -536,13 +728,14 @@
             cartEmptyMessage.classList.add('hidden');
             cartContent.classList.remove('hidden');
 
-            for (const id in cart) {
-                const item = cart[id];
+            for (const key in cart) {
+                const item = cart[key];
                 subtotal += item.price * item.quantity;
                 html += `
-                    <div class="py-2 border-b last:border-b-0 flex justify-between items-center text-sm">
+                    <div class="py-2 border-b last:border-b-0 flex justify-between items-start text-sm">
                         <div>
                             <p class="font-semibold">${item.quantity} x ${item.name}</p>
+                            ${item.notes ? `<p class="text-xs text-gray-500">Det.: ${item.notes}</p>` : ''}
                         </div>
                         <span class="font-semibold">$${(item.price * item.quantity).toFixed(2)}</span>
                     </div>
@@ -555,15 +748,15 @@
                     <div class="flex justify-between font-bold text-lg text-pink-600">
                         <span>Total</span><span>$${subtotal.toFixed(2)}</span>
                     </div>
-                    <p class="text-xs text-gray-500 mt-1">El valor final puede variar ligeramente según sabores y extras.</p>
+                    <p class="text-xs text-gray-500 mt-1">El valor final puede variar ligeramente según sabores y extras especiales.</p>
                 </div>
             `;
             checkoutSummary.innerHTML = html;
         }
 
-        // --------- EVENTOS PRODUCTOS ---------
+        // --------- EVENTOS PRODUCTOS (click y cambio de presentación) ---------
         productList.addEventListener('click', (e) => {
-            const card = e.target.closest('.flex-col');
+            const card = e.target.closest('.product-card');
             if (!card) return;
 
             if (e.target.classList.contains('quantity-btn')) {
@@ -577,10 +770,41 @@
             if (e.target.classList.contains('add-to-cart-btn')) {
                 const id = e.target.dataset.id;
                 const quantity = parseInt(card.querySelector('.quantity-value').textContent);
-                addToCart(id, quantity);
-                const productName = products.find(p => p.id == id).name;
+                const notes = (card.querySelector('.item-notes')?.value || '').trim();
+                const sizeSelect = card.querySelector('.option-size');
+                const optionIndex = sizeSelect ? parseInt(sizeSelect.value) : null;
+
+                addToCart(id, quantity, notes, optionIndex);
+
+                const product = products.find(p => p.id == id);
+                const productName = product ? product.name : 'Producto';
                 showNotification(`${quantity} "${productName}" agregado(s) al carrito.`);
+
                 card.querySelector('.quantity-value').textContent = '1';
+            }
+        });
+
+        // Cambiar precio cuando se cambia la presentación
+        productList.addEventListener('change', (e) => {
+            if (!e.target.classList.contains('option-size')) return;
+            const card = e.target.closest('.product-card');
+            if (!card) return;
+
+            const productId = card.dataset.productId;
+            const product = products.find(p => p.id == productId);
+            if (!product || !Array.isArray(product.options)) return;
+
+            const idx = parseInt(e.target.value);
+            const option = product.options[idx];
+
+            const priceEl = card.querySelector('.product-price');
+            const detailEl = card.querySelector('.option-detail');
+
+            if (priceEl && option) {
+                priceEl.textContent = option.price.toFixed(2);
+            }
+            if (detailEl && option) {
+                detailEl.textContent = 'Incluye: ' + option.detail;
             }
         });
 
@@ -646,9 +870,12 @@
             let message = `Hola Antojitos Luli Gourmet 👋\nQuiero hacer el siguiente pedido:\n\n`;
             let total = 0;
 
-            for (const id in cart) {
-                const item = cart[id];
+            for (const key in cart) {
+                const item = cart[key];
                 message += `• ${item.quantity} x ${item.name}\n`;
+                if (item.notes) {
+                    message += `   Detalles: ${item.notes}\n`;
+                }
                 total += item.price * item.quantity;
             }
 
@@ -666,7 +893,7 @@
             }
 
             if (extra) {
-                message += `Notas del pedido: ${extra}\n`;
+                message += `Notas generales del pedido: ${extra}\n`;
             }
 
             message += `\nForma de pago: transferencia/depósito a la cuenta indicada o pago en el local.\n`;
